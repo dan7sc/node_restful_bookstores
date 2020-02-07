@@ -1,11 +1,14 @@
+import Bookstore from '../models/bookstore';
 import db from '../../data/database-setup';
 const sequelize = db.sequelize;
 const INTEGER = db.Sequelize.INTEGER;
 const STRING = db.Sequelize.STRING;
+const DATE = db.Sequelize.DATE;
 
 const Customer = sequelize.define('customer', {
     id: {
         type: INTEGER,
+        autoIncrement:true,
         primaryKey: true
     },
     firstName: {
@@ -23,14 +26,16 @@ const Customer = sequelize.define('customer', {
     picture: {
         type: STRING(250),
         allowNull: true
-    }
+    },
+    createdAt: DATE,
+    updatedAt: DATE
+}, {
+    freezeTableName: true
 });
 
-Customer.associate = (models) => {
-    Customer.hasMany(models.Bookstore, {
-        onDelete: 'cascade',
-        hooks: true
-    });
-};
+Customer.hasMany(Bookstore, {
+    foreignKey: 'customerId',
+    onDelete: 'cascade'
+});
 
 export default Customer;

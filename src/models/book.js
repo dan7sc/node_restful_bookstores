@@ -1,15 +1,16 @@
-import Customer from '../models/customer';
 import Bookstore from '../models/bookstore';
 import db from '../../data/database-setup';
 const sequelize = db.sequelize;
 const INTEGER = db.Sequelize.INTEGER;
 const FLOAT = db.Sequelize.FLOAT;
 const STRING = db.Sequelize.STRING;
+const DATE = db.Sequelize.DATE;
 const INITIALLY_IMMEDIATE = db.Sequelize.Deferrable.INITIALLY_IMMEDIATE;
 
 const Book = sequelize.define('book', {
     id: {
         type: INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     title: {
@@ -24,7 +25,7 @@ const Book = sequelize.define('book', {
         type: STRING(150),
         allowNull: false
     },
-    descripttion: {
+    description: {
         type: STRING(300),
         allowNull: false
     },
@@ -32,26 +33,18 @@ const Book = sequelize.define('book', {
         type: FLOAT,
         allowNull: false
     },
+    createdAt: DATE,
+    updatedAt: DATE,
     bookstoreId: {
         type: INTEGER,
         references:{
             model: Bookstore,
             key: 'id',
-            deferrable: INITIALLY_IMMEDIATE,
-        }
-    },
-    customerId: {
-        type: INTEGER,
-        references:{
-            model: Customer,
-            key: 'id',
-            deferrable: INITIALLY_IMMEDIATE,
+            deferrable: INITIALLY_IMMEDIATE
         }
     }
+}, {
+    freezeTableName: true
 });
-
-Book.associate = (models) => {
-    Book.belongsTo(models.Bookstore);
-};
 
 export default Book;
