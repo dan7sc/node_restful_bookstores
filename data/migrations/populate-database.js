@@ -25,10 +25,10 @@ async function createTable(model) {
     const table = model.getTableName();
     try {
         await model.sync();
-        console.log(`Table ${table} created`);
+        console.log('\x1b[33m', `Table ${table} created`);
     }
     catch(error) {
-        console.log('Error in creating tables');
+        console.log('\x1b[31m', 'Error in creating tables');
     }
 }
 
@@ -37,19 +37,19 @@ async function getTableDataFromFile(table, file, dir) {
         const dataStr = await readContentFile(file, dir);
         const dataObj = JSON.parse(dataStr);
         const data = dataObj[table];
-        console.log(`Got data from table ${table}`);
+        console.log('\x1b[34m', `Got data from table ${table}`);
         return data;
     }
     catch(error) {
-        console.log('Error in get table data from file', error);
+        console.log('\x1b[31m', 'Error in get table data from file', error);
     }
 }
 
 async function saveDataInDatabase(data, model) {
     const table = model.getTableName();
     await model.create(data)
-        .then(() => console.log(`Item with id ${data['id']} created in table ${table}`))
-        .catch(error => console.log('Error in saving data',error));
+        .then(() => console.log('\x1b[32m', `Item with id ${data['id']} created in table ${table}`))
+        .catch(error => console.log('\x1b[31m', 'Error in saving data',error));
 }
 
 const populateDatabase = function() {
@@ -66,7 +66,7 @@ const populateDatabase = function() {
                 await saveDataInDatabase(item, model);
             });
         } catch(error) {
-            console.log('Error in populating table:', error);
+            console.log('\x1b[31m', 'Error in populating table:', error);
         }
     });
 };
