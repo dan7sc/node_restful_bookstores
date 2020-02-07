@@ -23,7 +23,7 @@ const Bookstore = sequelize.define('bookstore', {
     },
     createdAt: DATE,
     updatedAt: DATE,
-    customerId: {
+    customer_id: {
         type: INTEGER,
         references:{
             model: Customer,
@@ -36,7 +36,7 @@ const Bookstore = sequelize.define('bookstore', {
 });
 
 Bookstore.hasMany(Book, {
-    foreignKey: 'bookstoreId',
+    foreignKey: 'bookstore_id',
     onDelete: 'cascade'
 });
 

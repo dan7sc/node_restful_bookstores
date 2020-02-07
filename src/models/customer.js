@@ -34,7 +34,7 @@ const Customer = sequelize.define('customer', {
 });
 
 Customer.hasMany(Bookstore, {
-    foreignKey: 'customerId',
+    foreignKey: 'customer_id',
     onDelete: 'cascade'
 });
 

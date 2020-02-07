@@ -7,8 +7,7 @@
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "11.99",
-            "bookstoreId": 1,
-            "userId": 1
+            "bookstore_id": 1
         },
         {
             "id": 2,
@@ -17,8 +16,7 @@
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "13.99",
-            "bookstoreId": 1,
-            "userId": 1
+            "bookstore_id": 1
         },
         {
             "id": 3,
@@ -27,8 +25,7 @@
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "12.99",
-            "bookstoreId": 1,
-            "userId": 1
+            "bookstore_id": 1
         },
         {
             "id": 4,
@@ -37,8 +34,7 @@
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "15.99",
-            "bookstoreId": 1,
-            "userId": 1
+            "bookstore_id": 1
         },
         {
             "id": 5,
@@ -47,8 +43,7 @@
             "genre": "Mystery",
             "description": "A Sherlock Holmes mystery.",
             "price": "13.39",
-            "bookstoreId": 2,
-            "userId": 1
+            "bookstore_id": 2
         },
         {
             "id": 6,
@@ -57,8 +52,7 @@
             "genre": "Mystery",
             "description": "A Hercule Poirot mystery.",
             "price": "13.39",
-            "bookstoreId": 2,
-            "userId": 1
+            "bookstore_id": 2
         },
         {
             "id": 7,
@@ -67,8 +61,7 @@
             "genre": "Mystery",
             "description": "A Hercule Poirot mystery.",
             "price": "12.19",
-            "bookstoreId": 2,
-            "userId": 1
+            "bookstore_id": 2
         },
         {
             "id": 8,
@@ -77,8 +70,7 @@
             "genre": "French Literature",
             "description": "A classic book.",
             "price": "23.39",
-            "bookstoreId": 3,
-            "userId": 1
+            "bookstore_id": 3
         },
         {
             "id": 9,
@@ -87,8 +79,7 @@
             "genre": "Russian Literature",
             "description": "A classic book.",
             "price": "25.09",
-            "bookstoreId": 3,
-            "userId": 1
+            "bookstore_id": 3
         },
         {
             "id": 10,
@@ -97,8 +88,7 @@
             "genre": "Spanish Literature",
             "description": "A classic book.",
             "price": "24.19",
-            "bookstoreId": 3,
-            "userId": 1
+            "bookstore_id": 3
         },
         {
             "id": 11,
@@ -107,8 +97,7 @@
             "genre": "Brazilian Literature",
             "description": "A brazilian book.",
             "price": "15.39",
-            "bookstoreId": 4,
-            "userId": 1
+            "bookstore_id": 4
         },
         {
             "id": 12,
@@ -117,8 +106,7 @@
             "genre": "British Literature",
             "description": "A novel.",
             "price": "16.89",
-            "bookstoreId": 5,
-            "userId": 1
+            "bookstore_id": 5
         }
     ]
 }

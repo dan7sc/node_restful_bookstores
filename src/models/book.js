@@ -35,7 +35,7 @@ const Book = sequelize.define('book', {
     },
     createdAt: DATE,
     updatedAt: DATE,
-    bookstoreId: {
+    bookstore_id: {
         type: INTEGER,
         references:{
             model: Bookstore,
