@@ -5,7 +5,7 @@ const INTEGER = db.Sequelize.INTEGER;
 const STRING = db.Sequelize.STRING;
 const DATE = db.Sequelize.DATE;
 
-const Customer = sequelize.define('customer', {
+const Customer = sequelize.define('Customer', {
     id: {
         type: INTEGER,
         autoIncrement:true,
@@ -13,10 +13,12 @@ const Customer = sequelize.define('customer', {
     },
     firstName: {
         type: STRING(100),
+        field: 'first_name',
         allowNull: false
     },
     lastName: {
         type: STRING(100),
+        field: 'last_name',
         allowNull: false
     },
     email: {
@@ -27,14 +29,21 @@ const Customer = sequelize.define('customer', {
         type: STRING(250),
         allowNull: true
     },
-    createdAt: DATE,
-    updatedAt: DATE
+    createdAt: {
+        type: DATE,
+        field: 'created_at'
+    },
+    updatedAt: {
+        type: DATE,
+        field: 'updated_at'
+    }
 }, {
+    tableName: 'customer',
     freezeTableName: true
 });
 
-Customer.hasMany(Bookstore, {
-    foreignKey: 'customer_id',
+Customer.hasOne(Bookstore, {
+    foreignKey: 'customerId',
     onDelete: 'cascade'
 });
 

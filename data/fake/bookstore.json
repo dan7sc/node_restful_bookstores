@@ -2,31 +2,31 @@
     "bookstore": [
         {
             "id": 1,
-            "customer_id": 1,
+            "customerId": 1,
             "name": "Urban Fantasy",
             "picture": ""
         },
         {
             "id": 2,
-            "customer_id": 1,
+            "customerId": 1,
             "name": "Dead Fish",
             "picture": ""
         },
         {
             "id": 3,
-            "customer_id": 1,
+            "customerId": 1,
             "name": "Classic Stars",
             "picture": ""
         },
         {
             "id": 4,
-            "customer_id": 1,
+            "customerId": 1,
             "name": "Tupi or not Tupi?",
             "picture": ""
         },
         {
             "id": 5,
-            "customer_id": 1,
+            "customerId": 1,
             "name": "Updated!",
             "picture": ""
         }
