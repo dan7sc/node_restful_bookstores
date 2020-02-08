@@ -1,3 +1,3 @@
-import populateDatabase from './populate-database';
+import getAllBookstores from './populate-database.js';
 
-populateDatabase();
+getAllBookstores();

@@ -52,11 +52,11 @@ async function saveDataInDatabase(data, model) {
         .catch(error => console.log('\x1b[31m%s\x1b[0m', 'Error in saving data',error));
 }
 
-const populateDatabase = function() {
+const populateDatabase = async function() {
     const dir = path.dirname(__dirname) + '/fake/';
     const models = [Customer, Bookstore, Book];
 
-    asyncForEach(models, async (model) => {
+    await asyncForEach(models, async (model) => {
         try {
             await createTable(model);
             const table = model.getTableName();
@@ -69,6 +69,15 @@ const populateDatabase = function() {
             console.log('\x1b[31m%s\x1b[0m', 'Error in populating table:', error);
         }
     });
+    return models;
 };
 
-export default populateDatabase;
+const getAllBookstores = async function() {
+    const populatedTables = await populateDatabase();
+    const Bookstore = populatedTables[1];
+    Bookstore.findAll({}).then(bookstores => {
+        bookstores.forEach(bookstore => console.log(bookstore.get()));
+    }).catch(e => console.error('Error in getting bookstores:', e));
+};
+
+export default getAllBookstores;
