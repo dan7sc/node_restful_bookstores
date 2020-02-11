@@ -25,6 +25,13 @@ export default (sequelize, DataType) => {
             type: DataType.FLOAT,
             allowNull: false
         },
+        bookstoreId: {
+            type: DataType.INTEGER,
+            references: {
+                model: 'Bookstore',
+                key: 'id'
+            }
+        },
         createdAt: {
             type: DataType.DATE,
             field: 'created_at',

@@ -13,6 +13,13 @@ export default (sequelize, DataType) => {
             type: DataType.STRING(250),
             allowNull: true
         },
+        customerId: {
+            type: DataType.INTEGER,
+            references:{
+                model: 'Customer',
+                key: 'id'
+            }
+        },
         createdAt: {
             type: DataType.DATE,
             field: 'created_at',
