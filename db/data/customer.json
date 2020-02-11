@@ -1,0 +1,11 @@
+{
+    "customer": [
+        {
+            "id": 1,
+            "firstName": "Daniel",
+            "lastName": "Santiago",
+            "email": "dansan@fake.com",
+            "picture": ""
+        }
+    ]
+}
