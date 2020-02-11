@@ -28,7 +28,7 @@ export default (sequelize, DataType) => {
         bookstoreId: {
             type: DataType.INTEGER,
             references: {
-                model: 'Bookstore',
+                model: 'bookstore',
                 key: 'id'
             }
         },

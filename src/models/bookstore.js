@@ -16,7 +16,7 @@ export default (sequelize, DataType) => {
         customerId: {
             type: DataType.INTEGER,
             references:{
-                model: 'Customer',
+                model: 'customer',
                 key: 'id'
             }
         },
