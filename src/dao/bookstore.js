@@ -22,6 +22,28 @@ export default class BookstoreDAO {
         }
     }
 
+    static async addBookstore(data) {
+        try {
+            const Bookstore = db.conn.models.Bookstore;
+            const newBookstore = await Bookstore.create(data);
+            return newBookstore;
+        } catch(error) {
+            console.log(`Could not add bookstore: ${error}`);
+            return error;
+        }
+    }
+
+    static async deleteBookstores() {
+        try {
+            const Bookstore = db.conn.models.Bookstore;
+            const deletedBookstores = await Bookstore.destroy({ where: {} });
+            return deletedBookstores;
+        } catch(error) {
+            console.log(`Could not delete bookstores: ${error}`);
+            return error;
+        }
+    }
+
     static async getBookstoreById(id) {
         try {
             const Bookstore = db.conn.models.Bookstore;
@@ -30,17 +52,6 @@ export default class BookstoreDAO {
             return bookstore;
         } catch(error) {
             console.log(`Could not get bookstore with id ${id}: ${error}`);
-            return error;
-        }
-    }
-
-    static async addBookstore(data) {
-        try {
-            const Bookstore = db.conn.models.Bookstore;
-            const newBookstore = await Bookstore.create(data);
-            return newBookstore;
-        } catch(error) {
-            console.log(`Could not add bookstore: ${error}`);
             return error;
         }
     }

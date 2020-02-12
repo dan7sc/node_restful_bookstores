@@ -13,6 +13,31 @@ export default class BookstoreController {
         }
     }
 
+    static async apiDeleteBookstores(req, res) {
+        try {
+            const deletedBookstores = await BookstoreDAO.deleteBookstores();
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            return res.json(deletedBookstores);
+        } catch(error) {
+            res.status(500);
+            return res.json({error});
+        }
+    }
+
+   static async apiAddBookstore(req, res) {
+        const data = req.body;
+        try {
+            const newBookstore = await BookstoreDAO.addBookstore(data);
+            res.status(200);
+            res.setHeader('Content-Type', 'appication/json');
+            return res.json(newBookstore);
+        } catch (error) {
+            res.status(500);
+            return res.json({error});
+        }
+    }
+
     static async apiGetBookstoreById(req, res) {
         const id = req.params.bookstoreId;
         try {
@@ -27,20 +52,7 @@ export default class BookstoreController {
         }
     }
 
-    static async apiAddBookstore(req, res) {
-        const data = req.body;
-        try {
-            const newBookstore = await BookstoreDAO.addBookstore(data);
-            res.status(200);
-            res.setHeader('Content-Type', 'appication/json');
-            return res.json(newBookstore);
-        } catch (error) {
-            res.status(500);
-            return res.json({error});
-        }
-    }
-
-    static async apiUpdateBookstore(req, res) {
+     static async apiUpdateBookstore(req, res) {
         const data = req.body;
         const id = req.params.bookstoreId;
         try {

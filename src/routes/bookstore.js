@@ -5,7 +5,8 @@ const router = new Router();
 
 router.route('/')
     .get(BookstoreCtrl.apiGetBookstores)
-    .post(BookstoreCtrl.apiAddBookstore);
+    .post(BookstoreCtrl.apiAddBookstore)
+    .delete(BookstoreCtrl.apiDeleteBookstores);
 router.route('/:bookstoreId')
     .get(BookstoreCtrl.apiGetBookstoreById)
     .put(BookstoreCtrl.apiUpdateBookstore)
