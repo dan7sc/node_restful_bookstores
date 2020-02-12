@@ -7,7 +7,8 @@ router.route('/')
     .get(BookstoreCtrl.apiGetBookstores)
     .post(BookstoreCtrl.apiAddBookstore);
 router.route('/:bookstoreId')
-    .get(BookstoreCtrl.apiGetBookstoreById);
+    .get(BookstoreCtrl.apiGetBookstoreById)
+    .put(BookstoreCtrl.apiUpdateBookstore);
 
 
 export default router;

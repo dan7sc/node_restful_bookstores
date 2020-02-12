@@ -39,4 +39,18 @@ export default class BookstoreController {
             return res.json({error});
         }
     }
+
+    static async apiUpdateBookstore(req, res) {
+        const data = req.body;
+        const id = req.params.bookstoreId;
+        try {
+            const updatedBookstore = await BookstoreDAO.updateBookstore(id, data);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            return res.json(updatedBookstore);
+        } catch(error) {
+            res.status(500);
+            return res.json({error});
+        }
+    }
 }
