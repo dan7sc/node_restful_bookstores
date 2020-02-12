@@ -26,4 +26,17 @@ export default class BookstoreController {
             return res.json({error});
         }
     }
+
+    static async apiAddBookstore(req, res) {
+        const data = req.body;
+        try {
+            const newBookstore = await BookstoreDAO.addBookstore(data);
+            res.status(200);
+            res.setHeader('Content-Type', 'appication/json');
+            return res.json(newBookstore);
+        } catch (error) {
+            res.status(500);
+            return res.json({error});
+        }
+    }
 }

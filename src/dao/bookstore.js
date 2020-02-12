@@ -33,4 +33,15 @@ export default class BookstoreDAO {
             return error;
         }
     }
+
+    static async addBookstore(data) {
+        try {
+            const Bookstore = db.conn.models.Bookstore;
+            const newBookstore = await Bookstore.create(data);
+            return newBookstore;
+        } catch(error) {
+            console.log(`Could not add bookstore: ${error}`);
+            return error;
+        }
+    }
 }
