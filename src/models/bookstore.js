@@ -1,9 +1,11 @@
 export default (sequelize, DataType) => {
     const Bookstore = sequelize.define('Bookstore', {
         id: {
-            type: DataType.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
+            type: DataType.UUID,
+            defaultValue: DataType.UUIDV4,
+            autoIncrement: false,
+            primaryKey: true,
+            allowNull: false
         },
         name: {
             type: DataType.STRING(150),
@@ -14,7 +16,7 @@ export default (sequelize, DataType) => {
             allowNull: true
         },
         customerId: {
-            type: DataType.INTEGER,
+            type: DataType.UUID,
             references:{
                 model: 'customer',
                 key: 'id'

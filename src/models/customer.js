@@ -1,9 +1,11 @@
 export default (sequelize, DataType) => {
     const Customer = sequelize.define('Customer', {
         id: {
-            type: DataType.INTEGER,
-            autoIncrement:true,
-            primaryKey: true
+            type: DataType.UUID,
+            defaultValue: DataType.UUIDV4,
+            autoIncrement: false,
+            primaryKey: true,
+            allowNull: false
         },
         firstName: {
             type: DataType.STRING(100),

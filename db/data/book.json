@@ -1,112 +1,112 @@
 {
     "book": [
         {
-            "id": 1,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6040",
             "title": "The Hobbit",
             "author": "J.R.R. Tolkien",
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "11.99",
-            "bookstoreId": 1
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162a"
         },
         {
-            "id": 2,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6041",
             "title": "The Fellowship of the Ring",
             "author": "J.R.R. Tolkien",
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "13.99",
-            "bookstoreId": 1
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162a"
         },
         {
-            "id": 3,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6042",
             "title": "The Two Towers",
             "author": "J.R.R. Tolkien",
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "12.99",
-            "bookstoreId": 1
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162a"
         },
         {
-            "id": 4,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6043",
             "title": "The Return of the King",
             "author": "J.R.R. Tolkien",
             "genre": "Fantasy",
             "description": "A book about fantasy.",
             "price": "15.99",
-            "bookstoreId": 1
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162a"
         },
         {
-            "id": 5,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6044",
             "title": "Sherlock Holmes: Selected Stories",
             "author": "Arthur Conan Doyle",
             "genre": "Mystery",
             "description": "A Sherlock Holmes mystery.",
             "price": "13.39",
-            "bookstoreId": 2
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162b"
         },
         {
-            "id": 6,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6045",
             "title": "The Murder of Roger Ackroyd",
             "author": "Agatha Christie",
             "genre": "Mystery",
             "description": "A Hercule Poirot mystery.",
             "price": "13.39",
-            "bookstoreId": 2
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162b"
         },
         {
-            "id": 7,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6046",
             "title": "The Murder on the Links",
             "author": "Agatha Christie",
             "genre": "Mystery",
             "description": "A Hercule Poirot mystery.",
             "price": "12.19",
-            "bookstoreId": 2
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162b"
         },
         {
-            "id": 8,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6047",
             "title": "The Red and the Black",
             "author": "Stendhal",
             "genre": "French Literature",
             "description": "A classic book.",
             "price": "23.39",
-            "bookstoreId": 3
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162c"
         },
         {
-            "id": 9,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6048",
             "title": "Crime and Punishment",
             "author": "Fyodor Dostoyevsky",
             "genre": "Russian Literature",
             "description": "A classic book.",
             "price": "25.09",
-            "bookstoreId": 3
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162c"
         },
         {
-            "id": 10,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6049",
             "title": "One Hundred Years of Solitude",
             "author": "Gabriel Garcia Marquez",
             "genre": "Spanish Literature",
             "description": "A classic book.",
             "price": "24.19",
-            "bookstoreId": 3
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162c"
         },
         {
-            "id": 11,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6050",
             "title": "The Third Bank of the River and Other Stories",
             "author": "João Guimarães Rosa",
             "genre": "Brazilian Literature",
             "description": "A brazilian book.",
             "price": "15.39",
-            "bookstoreId": 4
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162d"
         },
         {
-            "id": 12,
+            "id": "ba48ba34-6609-4468-aa5e-2b7b479d6051",
             "title": "Atonement",
             "author": "Ian McEwan",
             "genre": "British Literature",
             "description": "A novel.",
             "price": "16.89",
-            "bookstoreId": 5
+            "bookstoreId": "6bd895ce-af7a-451a-8b25-50c2876e162e"
         }
     ]
 }

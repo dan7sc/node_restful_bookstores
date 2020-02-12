@@ -1,32 +1,32 @@
 {
     "bookstore": [
         {
-            "id": 1,
-            "customerId": 1,
+            "id": "6bd895ce-af7a-451a-8b25-50c2876e162a",
+            "customerId": "9f933f19-d3c6-4fa1-a161-0a2a052fdc65",
             "name": "Urban Fantasy",
             "picture": ""
         },
         {
-            "id": 2,
-            "customerId": 1,
+            "id": "6bd895ce-af7a-451a-8b25-50c2876e162b",
+            "customerId": "9f933f19-d3c6-4fa1-a161-0a2a052fdc65",
             "name": "Dead Fish",
             "picture": ""
         },
         {
-            "id": 3,
-            "customerId": 1,
+            "id": "6bd895ce-af7a-451a-8b25-50c2876e162c",
+            "customerId": "9f933f19-d3c6-4fa1-a161-0a2a052fdc65",
             "name": "Classic Stars",
             "picture": ""
         },
         {
-            "id": 4,
-            "customerId": 1,
+            "id": "6bd895ce-af7a-451a-8b25-50c2876e162d",
+            "customerId": "9f933f19-d3c6-4fa1-a161-0a2a052fdc65",
             "name": "Tupi or not Tupi?",
             "picture": ""
         },
         {
-            "id": 5,
-            "customerId": 1,
+            "id": "6bd895ce-af7a-451a-8b25-50c2876e162e",
+            "customerId": "9f933f19-d3c6-4fa1-a161-0a2a052fdc65",
             "name": "Updated!",
             "picture": ""
         }
