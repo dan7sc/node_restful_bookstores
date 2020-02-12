@@ -53,4 +53,17 @@ export default class BookstoreController {
             return res.json({error});
         }
     }
+
+    static async apiDeleteBookstore(req, res) {
+        const id = req.params.bookstoreId;
+        try {
+            const deletedBookstore = await BookstoreDAO.deleteBookstore(id);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            return res.json(deletedBookstore);
+        } catch(error) {
+            res.status(500);
+            return res.json({error});
+        }
+    }
 }

@@ -56,4 +56,16 @@ export default class BookstoreDAO {
             return error;
         }
     }
+
+    static async deleteBookstore(id) {
+        try {
+            const Bookstore = db.conn.models.Bookstore;
+            const options = { id: id };
+            const deletedBookstore = await Bookstore.destroy({ where: options });
+            return deletedBookstore;
+        } catch(error) {
+            console.log(`Could not delete bookstore: ${error}`);
+            return error;
+        }
+    }
  }
