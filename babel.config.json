@@ -1,15 +1,17 @@
 {
     "presets": [
         [
-            "@babel/env",
+            "@babel/preset-env",
             {
                 "targets": {
-                    "firefox": "72"
+                    "firefox": "72",
+                    "node": "current"
                 }
             }
         ]
     ],
     "plugins": [
-        "@babel/plugin-transform-runtime"
+        "@babel/plugin-transform-runtime",
+        "jest-hoist"
     ]
 }
