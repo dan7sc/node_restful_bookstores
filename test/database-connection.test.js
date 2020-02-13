@@ -1,11 +1,11 @@
 import BookstoreDAO from '../src/dao/bookstore';
 
-describe('Connection to database', () => {
+describe('Database', () => {
     beforeAll(async () => {
         await BookstoreDAO.injectDB(global.appClient);
     });
 
-    test('Can access bookstore data', async () => {
+    test('should syncronize models', async () => {
         const modelNames = [];
         const models = global.appClient.models;
         for (const model in models) {
