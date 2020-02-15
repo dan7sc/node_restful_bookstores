@@ -24,4 +24,17 @@ describe('GET method', () => {
         expect(lastBookstore.name).toEqual('Updated!');
         expect(firstBookstore.length).toBe(undefined);
     });
+
+    test('should add a bookstore', async () => {
+        const bookstoreToAdd = {
+            id: '6bd895ce-af7a-451a-8b25-50c2876e162f',
+            name: 'myBookstore',
+            picture: 'my_bookstore_image.png',
+            customerId: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
+        };
+        const addedBookstore = await BookstoreDAO.addBookstore(bookstoreToAdd);
+        const response = await BookstoreDAO.getBookstoreById(addedBookstore.id);
+        expect(addedBookstore.name).toEqual(response.name);
+        expect(addedBookstore.picture).toEqual(response.picture);
+    });
 });
