@@ -37,4 +37,18 @@ describe('GET method', () => {
         expect(addedBookstore.name).toEqual(response.name);
         expect(addedBookstore.picture).toEqual(response.picture);
     });
+
+    test('should update bookstore', async () => {
+        const id = '6bd895ce-af7a-451a-8b25-50c2876e162f';
+        const dataToUpdate = {
+            name: 'myUpdatedBookstore',
+            picture: 'updated_image.png'
+        };
+        const response = await BookstoreDAO.updateBookstore(id, dataToUpdate);
+        const updatedBookstore = await BookstoreDAO.getBookstoreById(id);
+        expect(response.pop()).toBe([1].pop());
+        expect(updatedBookstore.id).toEqual(id);
+        expect(updatedBookstore.name).toEqual(dataToUpdate.name);
+        expect(updatedBookstore.picture).toEqual(dataToUpdate.picture);
+    });
 });
