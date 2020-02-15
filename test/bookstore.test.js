@@ -51,4 +51,12 @@ describe('GET method', () => {
         expect(updatedBookstore.name).toEqual(dataToUpdate.name);
         expect(updatedBookstore.picture).toEqual(dataToUpdate.picture);
     });
+
+    test('should delete bookstore', async () => {
+        const id = '6bd895ce-af7a-451a-8b25-50c2876e162f';
+        const response = await BookstoreDAO.deleteBookstore(id);
+        const bookstore = await BookstoreDAO.getBookstoreById(id);
+        expect(response).toBe(1);
+        expect(bookstore).toEqual(null);
+    });
 });
