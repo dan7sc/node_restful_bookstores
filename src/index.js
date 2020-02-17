@@ -2,6 +2,7 @@ import path from 'path';
 import app from './server';
 import Sequelize from 'sequelize';
 import BookstoreDAO from './dao/bookstore';
+import BookDAO from './dao/book';
 import { importModel, associateModels, readContentDirectory } from '../utils/utils';
 
 const port = process.env.PORT || 5000;
@@ -39,6 +40,7 @@ sequelize.authenticate()
         await associateModels(db);
         await db.sequelize.sync();
         await BookstoreDAO.injectDB(sequelize);
+        await BookDAO.injectDB(sequelize);
         console.log('Connection to database has been established successfully');
         app.listen(port, () => console.log(`Listening on port ${port}`));
     })
