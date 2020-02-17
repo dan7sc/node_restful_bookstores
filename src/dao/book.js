@@ -20,6 +20,17 @@ export default class BookDAO {
         }
     }
 
+    static async addBook(data) {
+        try {
+            const Book = db.conn.models.Book;
+            const newBook = await Book.create(data);
+            return newBook;
+        } catch(error) {
+            console.log(`Could not add book: ${error}`);
+            return error;
+        }
+    }
+
     static async getBookById(id) {
         try {
             const Book = db.conn.models.Book;
@@ -32,17 +43,6 @@ export default class BookDAO {
         }
     }
 
-    static async addBook(data) {
-        try {
-            const Book = db.conn.models.Book;
-            const newBook = await Book.create(data);
-            return newBook;
-        } catch(error) {
-            console.log(`Could not add book: ${error}`);
-            return error;
-        }
-    }
-
     static async updateBook(id, data) {
         try {
             const Book = db.conn.models.Book;
@@ -51,6 +51,18 @@ export default class BookDAO {
             return updatedBook;
         } catch(error) {
             console.log(`Could not update book: ${error}`);
+            return error;
+        }
+    }
+
+    static async deleteBook(id) {
+        try {
+            const Book = db.conn.models.Book;
+            const options = { id: id };
+            const deletedBook = await Book.destroy({ where: options });
+            return deletedBook;
+        } catch(error) {
+            console.log(`Could not delete book: ${error}`);
             return error;
         }
     }
