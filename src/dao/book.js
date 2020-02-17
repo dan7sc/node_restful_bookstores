@@ -20,6 +20,18 @@ export default class BookDAO {
         }
     }
 
+    static async getBookById(id) {
+        try {
+            const Book = db.conn.models.Book;
+            const options = { id: id };
+            const books = await Book.findOne({ where: options });
+            return books;
+        } catch(error) {
+            console.error(`Could not get books: ${error}`);
+            return error;
+        }
+    }
+
     static async addBook(data) {
         try {
             const Book = db.conn.models.Book;
