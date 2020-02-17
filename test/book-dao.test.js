@@ -61,4 +61,12 @@ describe('book dao', () => {
         expect(updatedBook.description).toEqual('A italian novel.');
         expect(updatedBook.price).toEqual(32.29);
     });
+
+    test('should delete book', async () => {
+        const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
+        const numberOfDeletedBooks = await BookDAO.deleteBook(id);
+        const book = await BookDAO.getBookById(id);
+        expect(numberOfDeletedBooks).toBe(1);
+        expect(book).toEqual(null);
+    });
 });
