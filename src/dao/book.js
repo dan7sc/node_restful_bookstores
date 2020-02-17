@@ -19,4 +19,15 @@ export default class BookDAO {
             return error;
         }
     }
+
+    static async addBook(data) {
+        try {
+            const Book = db.conn.models.Book;
+            const newBook = await Book.create(data);
+            return newBook;
+        } catch(error) {
+            console.log(`Could not add book: ${error}`);
+            return error;
+        }
+    }
 }
