@@ -42,4 +42,16 @@ export default class BookDAO {
             return error;
         }
     }
+
+    static async updateBook(id, data) {
+        try {
+            const Book = db.conn.models.Book;
+            const options = { id: id };
+            const updatedBook = await Book.update(data, { where: options });
+            return updatedBook;
+        } catch(error) {
+            console.log(`Could not update book: ${error}`);
+            return error;
+        }
+    }
 }
