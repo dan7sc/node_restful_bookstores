@@ -46,4 +46,19 @@ describe('book dao', () => {
         expect(lastBook.title).toEqual('Atonement');
         expect(lastBook.length).toBe(undefined);
     });
+
+    test('should update a book', async () => {
+        const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
+        const bookToUpdate = {
+            'description': 'A italian novel.',
+            'price': '32.29'
+        };
+        const numberOfUpdatedBooks = await BookDAO.updateBook(id, bookToUpdate);
+        const updatedBook = await BookDAO.getBookById(id);
+        expect(numberOfUpdatedBooks.pop()).toBe(1);
+        expect(updatedBook.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6053');
+        expect(updatedBook.title).toEqual('The Name of the Rose');
+        expect(updatedBook.description).toEqual('A italian novel.');
+        expect(updatedBook.price).toEqual(32.29);
+    });
 });
