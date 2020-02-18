@@ -1,9 +1,9 @@
-const db = {};
+let Book;
 
 export default class BookDAO {
     static async injectDB(conn) {
         try {
-            db.conn = conn;
+            Book = conn.models.Book;
         } catch(error) {
             console.error(`Unable to establish a connection: ${error}`);
         }
@@ -11,7 +11,6 @@ export default class BookDAO {
 
     static async getBooks() {
         try {
-            const Book = db.conn.models.Book;
             const books = await Book.findAll({});
             return books;
         } catch(error) {
@@ -22,7 +21,6 @@ export default class BookDAO {
 
     static async addBook(data) {
         try {
-            const Book = db.conn.models.Book;
             const newBook = await Book.create(data);
             return newBook;
         } catch(error) {
@@ -33,7 +31,6 @@ export default class BookDAO {
 
     static async getBookById(id) {
         try {
-            const Book = db.conn.models.Book;
             const options = { id: id };
             const books = await Book.findOne({ where: options });
             return books;
@@ -45,7 +42,6 @@ export default class BookDAO {
 
     static async updateBook(id, data) {
         try {
-            const Book = db.conn.models.Book;
             const options = { id: id };
             const updatedBook = await Book.update(data, { where: options });
             return updatedBook;
@@ -57,7 +53,6 @@ export default class BookDAO {
 
     static async deleteBook(id) {
         try {
-            const Book = db.conn.models.Book;
             const options = { id: id };
             const deletedBook = await Book.destroy({ where: options });
             return deletedBook;

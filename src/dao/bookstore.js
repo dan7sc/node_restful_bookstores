@@ -1,9 +1,9 @@
-const db = {};
+let Bookstore;
 
 export default class BookstoreDAO {
     static async injectDB(conn) {
         try {
-            db.conn = await conn;
+            Bookstore = conn.models.Bookstore;
         }
         catch(error) {
             console.error(`Unable to establish a connection: ${error}`);
@@ -12,7 +12,6 @@ export default class BookstoreDAO {
 
     static async getBookstores() {
         try {
-            const Bookstore = db.conn.models.Bookstore;
             const bookstores = await Bookstore.findAll({});
             return bookstores;
         }
@@ -24,7 +23,6 @@ export default class BookstoreDAO {
 
     static async addBookstore(data) {
         try {
-            const Bookstore = db.conn.models.Bookstore;
             const newBookstore = await Bookstore.create(data);
             return newBookstore;
         } catch(error) {
@@ -35,7 +33,6 @@ export default class BookstoreDAO {
 
     static async deleteBookstores() {
         try {
-            const Bookstore = db.conn.models.Bookstore;
             const deletedBookstores = await Bookstore.destroy({ where: {} });
             return deletedBookstores;
         } catch(error) {
@@ -46,7 +43,6 @@ export default class BookstoreDAO {
 
     static async getBookstoreById(id) {
         try {
-            const Bookstore = db.conn.models.Bookstore;
             const options = { id: id };
             const bookstore = await Bookstore.findOne({ where: options });
             return bookstore;
@@ -58,7 +54,6 @@ export default class BookstoreDAO {
 
     static async updateBookstore(id, data) {
         try {
-            const Bookstore = db.conn.models.Bookstore;
             const options = { id: id };
             const updatedBookstore = await Bookstore.update(data, { where: options });
             return updatedBookstore;
@@ -70,7 +65,6 @@ export default class BookstoreDAO {
 
     static async deleteBookstore(id) {
         try {
-            const Bookstore = db.conn.models.Bookstore;
             const options = { id: id };
             const deletedBookstore = await Bookstore.destroy({ where: options });
             return deletedBookstore;
