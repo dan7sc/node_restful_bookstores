@@ -6,7 +6,8 @@ const router = new Router();
 router.route('/')
     .get(BookCtrl.apiGetBooks);
 router.route('/:bookstoreId/books')
-    .get(BookCtrl.apiGetBooksByBookstoreId);
+    .get(BookCtrl.apiGetBooksByBookstoreId)
+    .post(BookCtrl.apiAddBook);
 router.route('/:bookstoreId/books/:bookId')
     .get(BookCtrl.apiGetBookByBookstoreId);
 
