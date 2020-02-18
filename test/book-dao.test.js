@@ -16,6 +16,18 @@ describe('book dao', () => {
         expect(books.length).toBe(12);
     });
 
+    test('should get books from a bookstore', async () => {
+        const id = '6bd895ce-af7a-451a-8b25-50c2876e162a';
+        const books = await BookDAO.getBooksByBookstoreId(id);
+        const firstBook = books[0];
+        const lastBook = books[books.length-1];
+        expect(firstBook.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6040');
+        expect(firstBook.title).toEqual('The Hobbit');
+        expect(lastBook.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6043');
+        expect(lastBook.title).toEqual('The Return of the King');
+        expect(books.length).toBe(4);
+    });
+
     test('should add a book', async () => {
         const bookToAdd = {
             'id': 'ba48ba34-6609-4468-aa5e-2b7b479d6053',
