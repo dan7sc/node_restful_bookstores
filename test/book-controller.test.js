@@ -81,4 +81,24 @@ describe('book ctrl', () => {
         expect(addedBook.title).toEqual(bookToAdd.title);
         expect(addedBook.bookstoreId).toEqual(bookToAdd.bookstoreId);
     });
+
+    test('should update a book', async () => {
+        const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
+        const bookToUpdate = {
+            'description': 'A italian novel.',
+            'price': '32.29'
+        };
+        const req = mockRequest(null, id);
+        req.body = bookToUpdate;
+        const res = mockResponse();
+        const numberOfUpdatedBooks = await BookCtrl.apiUpdateBook(req, res);
+        const updatedBook = await BookDAO.getBookById(id);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+        expect(numberOfUpdatedBooks.pop()).toBe(1);
+        expect(updatedBook.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6053');
+        expect(updatedBook.title).toEqual('The Name of the Rose');
+        expect(updatedBook.description).toEqual('A italian novel.');
+        expect(updatedBook.price).toEqual(32.29);
+    });
 });
