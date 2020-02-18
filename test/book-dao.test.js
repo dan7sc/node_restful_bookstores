@@ -59,6 +59,27 @@ describe('book dao', () => {
         expect(lastBook.length).toBe(undefined);
     });
 
+    test('should get a book from a bookstore', async () => {
+        const bookId = [
+            'ba48ba34-6609-4468-aa5e-2b7b479d6040',
+            'ba48ba34-6609-4468-aa5e-2b7b479d6051'
+        ];
+        const bookstoreId = [
+            '6bd895ce-af7a-451a-8b25-50c2876e162a',
+            '6bd895ce-af7a-451a-8b25-50c2876e162e'
+        ];
+        const firstBook = await BookDAO.getBookByBookstoreId(bookstoreId[0], bookId[0]);
+        const lastBook = await BookDAO.getBookByBookstoreId(bookstoreId[1], bookId[1]);
+        expect(firstBook.id).toEqual(bookId[0]);
+        expect(firstBook.title).toEqual('The Hobbit');
+        expect(firstBook.bookstoreId).toEqual(bookstoreId[0]);
+        expect(lastBook.length).toBe(undefined);
+        expect(lastBook.id).toEqual(bookId[1]);
+        expect(lastBook.title).toEqual('Atonement');
+        expect(lastBook.bookstoreId).toEqual(bookstoreId[1]);
+        expect(lastBook.length).toBe(undefined);
+    });
+
     test('should update a book', async () => {
         const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
         const bookToUpdate = {
