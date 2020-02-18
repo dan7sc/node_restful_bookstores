@@ -60,4 +60,20 @@ export default class BookController {
             return error;
         }
     }
+
+    static async apiUpdateBook(req, res) {
+        try {
+            const data = req.body;
+            const id = req.params.bookId;
+            const updatedBook = await BookDAO.updateBook(id, data);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(updatedBook);
+            return updatedBook;
+        } catch(error) {
+            res.status(500);
+            res.json({error});
+            return error;
+        }
+    }
 }
