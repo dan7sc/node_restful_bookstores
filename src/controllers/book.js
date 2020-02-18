@@ -14,4 +14,19 @@ export default class BookController {
             return error;
         }
     }
+
+    static async apiGetBooksByBookstoreId(req, res) {
+        try {
+            const id = req.params.bookstoreId;
+            const books = await BookDAO.getBooksByBookstoreId(id);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(books);
+            return books;
+        } catch(error) {
+            res.status(500);
+            res.json({error});
+            return error;
+        }
+    }
 }
