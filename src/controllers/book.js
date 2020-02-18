@@ -76,4 +76,19 @@ export default class BookController {
             return error;
         }
     }
+
+    static async apiDeleteBook(req, res) {
+        try {
+            const id = req.params.bookId;
+            const deletedBook = await BookDAO.deleteBook(id);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(deletedBook);
+            return deletedBook;
+        } catch(error) {
+            res.status(500);
+            res.json({error});
+            return error;
+        }
+    }
 }

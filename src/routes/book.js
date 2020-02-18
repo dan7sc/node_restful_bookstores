@@ -9,6 +9,8 @@ router.route('/:bookstoreId/books')
     .get(BookCtrl.apiGetBooksByBookstoreId)
     .post(BookCtrl.apiAddBook);
 router.route('/:bookstoreId/books/:bookId')
-    .get(BookCtrl.apiGetBookByBookstoreId);
+    .get(BookCtrl.apiGetBookByBookstoreId)
+    .put(BookCtrl.apiUpdateBook)
+    .delete(BookCtrl.apiDeleteBook);
 
 export default router;
