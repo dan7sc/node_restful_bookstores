@@ -7,7 +7,8 @@ const mockRequest = (bookstoreId, bookId) => {
         params: {
             bookstoreId: bookstoreId,
             bookId: bookId
-        }
+        },
+        body: {}
     };
     return req;
 };
@@ -58,5 +59,26 @@ describe('book ctrl', () => {
         expect(book.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6040');
         expect(book.bookstoreId).toEqual('6bd895ce-af7a-451a-8b25-50c2876e162a');
         expect(book.length).toBe(undefined);
+    });
+
+    test('should add book', async () => {
+        const bookToAdd = {
+            'id': 'ba48ba34-6609-4468-aa5e-2b7b479d6053',
+            'title': 'The Name of the Rose',
+            'author': 'Umberto Eco',
+            'genre': 'Historical Mystery',
+            'description': 'A novel.',
+            'price': '22.29',
+            'bookstoreId': '6bd895ce-af7a-451a-8b25-50c2876e162e'
+        };
+        const req = mockRequest(bookToAdd['bookstoreId'], bookToAdd['id']);
+        req.body = bookToAdd;
+        const res = mockResponse();
+        const addedBook = await BookCtrl.apiAddBook(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+        expect(addedBook.id).toEqual(bookToAdd.id);
+        expect(addedBook.title).toEqual(bookToAdd.title);
+        expect(addedBook.bookstoreId).toEqual(bookToAdd.bookstoreId);
     });
 });
