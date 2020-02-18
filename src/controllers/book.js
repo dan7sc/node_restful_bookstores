@@ -17,8 +17,8 @@ export default class BookController {
 
     static async apiGetBooksByBookstoreId(req, res) {
         try {
-            const id = req.params.bookstoreId;
-            const books = await BookDAO.getBooksByBookstoreId(id);
+            const bookstoreId = req.params.bookstoreId;
+            const books = await BookDAO.getBooksByBookstoreId(bookstoreId);
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(books);

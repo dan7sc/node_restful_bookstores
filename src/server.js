@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v1/bookstores', bookstore);
+app.use('/api/v1/bookstores', book);
 app.use('/api/v1/books', book);
 
 export default app;
