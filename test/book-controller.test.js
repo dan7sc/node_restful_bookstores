@@ -101,4 +101,16 @@ describe('book ctrl', () => {
         expect(updatedBook.description).toEqual('A italian novel.');
         expect(updatedBook.price).toEqual(32.29);
     });
+
+    test('should delete book', async () => {
+        const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
+        const req = mockRequest(null, id);
+        const res = mockResponse();
+        const numberOfDeletedBooks = await BookCtrl.apiDeleteBook(req, res);
+        const book = await BookDAO.getBookById(id);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+        expect(numberOfDeletedBooks).toBe(1);
+        expect(book).toEqual(null);
+    });
 });
