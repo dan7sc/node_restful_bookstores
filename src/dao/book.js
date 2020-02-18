@@ -19,6 +19,17 @@ export default class BookDAO {
         }
     }
 
+    static async getBooksByBookstoreId(id) {
+        try {
+            const options = { bookstoreId: id };
+            const books = await Book.findAll({ where: options });
+            return books;
+        } catch(error) {
+            console.log(`Could not get books from bookstore: ${error}`);
+            return error;
+        }
+    }
+
     static async addBook(data) {
         try {
             const newBook = await Book.create(data);
