@@ -6,10 +6,12 @@ export default class BookstoreController {
             const bookstores = await BookstoreDAO.getBookstores();
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            return res.json(bookstores);
+            res.json(bookstores);
+            return bookstores;
         } catch(error) {
             res.status(500);
-            return res.json({error});
+            res.json({error});
+            return error;
         }
     }
 
@@ -18,10 +20,12 @@ export default class BookstoreController {
             const deletedBookstores = await BookstoreDAO.deleteBookstores();
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            return res.json(deletedBookstores);
+            res.json(deletedBookstores);
+            return deletedBookstores;
         } catch(error) {
             res.status(500);
-            return res.json({error});
+            res.json({error});
+            return error;
         }
     }
 
@@ -31,10 +35,12 @@ export default class BookstoreController {
             const newBookstore = await BookstoreDAO.addBookstore(data);
             res.status(200);
             res.setHeader('Content-Type', 'appication/json');
-            return res.json(newBookstore);
+            res.json(newBookstore);
+            return newBookstore;
         } catch (error) {
             res.status(500);
-            return res.json({error});
+            res.json({error});
+            return error;
         }
     }
 
@@ -44,11 +50,13 @@ export default class BookstoreController {
             const bookstore = await BookstoreDAO.getBookstoreById(id);
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            return res.json(bookstore);
+            res.json(bookstore);
+            return bookstore;
         }
         catch (error) {
             res.status(500);
-            return res.json({error});
+            res.json({error});
+            return error;
         }
     }
 
@@ -59,10 +67,12 @@ export default class BookstoreController {
             const updatedBookstore = await BookstoreDAO.updateBookstore(id, data);
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            return res.json(updatedBookstore);
+            res.json(updatedBookstore);
+            return updatedBookstore;
         } catch(error) {
             res.status(500);
-            return res.json({error});
+            res.json({error});
+            return error;
         }
     }
 
@@ -72,10 +82,12 @@ export default class BookstoreController {
             const deletedBookstore = await BookstoreDAO.deleteBookstore(id);
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            return res.json(deletedBookstore);
+            res.json(deletedBookstore);
+            return deletedBookstore;
         } catch(error) {
             res.status(500);
-            return res.json({error});
+            res.json({error});
+            return error;
         }
     }
 }
