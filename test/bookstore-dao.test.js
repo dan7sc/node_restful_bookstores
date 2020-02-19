@@ -15,12 +15,12 @@ describe('bookstore dao', () => {
     });
 
     test('should get a bookstore', async () => {
-        const ids = [
+        const bookstoreId = [
             "6bd895ce-af7a-451a-8b25-50c2876e162a",
             "6bd895ce-af7a-451a-8b25-50c2876e162e"
         ];
-        const firstBookstore = await BookstoreDAO.getBookstoreById(ids[0]);
-        const lastBookstore = await BookstoreDAO.getBookstoreById(ids[1]);
+        const firstBookstore = await BookstoreDAO.getBookstoreById(bookstoreId[0]);
+        const lastBookstore = await BookstoreDAO.getBookstoreById(bookstoreId[1]);
         expect(firstBookstore.name).toEqual('Urban Fantasy');
         expect(lastBookstore.name).toEqual('Updated!');
         expect(firstBookstore.length).toBe(undefined);
@@ -40,23 +40,23 @@ describe('bookstore dao', () => {
     });
 
     test('should update bookstore', async () => {
-        const id = '6bd895ce-af7a-451a-8b25-50c2876e162f';
+        const bookstoreId = '6bd895ce-af7a-451a-8b25-50c2876e162f';
         const dataToUpdate = {
             name: 'myUpdatedBookstore',
             picture: 'updated_image.png'
         };
-        const numberOfUpdatedBookstores = await BookstoreDAO.updateBookstore(id, dataToUpdate);
-        const updatedBookstore = await BookstoreDAO.getBookstoreById(id);
+        const numberOfUpdatedBookstores = await BookstoreDAO.updateBookstore(bookstoreId, dataToUpdate);
+        const updatedBookstore = await BookstoreDAO.getBookstoreById(bookstoreId);
         expect(numberOfUpdatedBookstores.pop()).toBe(1);
-        expect(updatedBookstore.id).toEqual(id);
+        expect(updatedBookstore.id).toEqual(bookstoreId);
         expect(updatedBookstore.name).toEqual(dataToUpdate.name);
         expect(updatedBookstore.picture).toEqual(dataToUpdate.picture);
     });
 
     test('should delete bookstore', async () => {
-        const id = '6bd895ce-af7a-451a-8b25-50c2876e162f';
-        const numberOfDeletedBookstores = await BookstoreDAO.deleteBookstore(id);
-        const bookstore = await BookstoreDAO.getBookstoreById(id);
+        const bookstoreId = '6bd895ce-af7a-451a-8b25-50c2876e162f';
+        const numberOfDeletedBookstores = await BookstoreDAO.deleteBookstore(bookstoreId);
+        const bookstore = await BookstoreDAO.getBookstoreById(bookstoreId);
         expect(numberOfDeletedBookstores).toBe(1);
         expect(bookstore).toEqual(null);
     });
