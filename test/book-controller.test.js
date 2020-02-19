@@ -2,14 +2,10 @@ import BookDAO from '../src/dao/book';
 import BookCtrl from '../src/controllers/book';
 
 jest.mock('express');
-const mockRequest = (bookstoreId, bookId) => {
-    const req = {
-        params: {
-            bookstoreId: bookstoreId,
-            bookId: bookId
-        },
-        body: {}
-    };
+const mockRequest = (params, body) => {
+    const req = {};
+    req.params = params;
+    req.body = body;
     return req;
 };
 const mockResponse = () => {
@@ -35,76 +31,83 @@ describe('book ctrl', () => {
     });
 
     test('should get books from a bookstore', async () => {
-        const id = '6bd895ce-af7a-451a-8b25-50c2876e162a';
+        const params = {
+            bookstoreId: '6bd895ce-af7a-451a-8b25-50c2876e162a'
+        };
         const res = mockResponse();
-        const req = mockRequest(id, null);
+        const req = mockRequest(params, null);
         const books = await BookCtrl.apiGetBooksByBookstoreId(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(books[0].id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6040');
-        expect(books[0].bookstoreId).toEqual('6bd895ce-af7a-451a-8b25-50c2876e162a');
+        expect(books[0].bookstoreId).toEqual(params.bookstoreId);
         expect(books[3].id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6043');
-        expect(books[3].bookstoreId).toEqual('6bd895ce-af7a-451a-8b25-50c2876e162a');
+        expect(books[3].bookstoreId).toEqual(params.bookstoreId);
         expect(books.length).toBe(4);
     });
 
     test('should get a book from a bookstore', async () => {
-        const bookstoreId = '6bd895ce-af7a-451a-8b25-50c2876e162a';
-        const bookId = 'ba48ba34-6609-4468-aa5e-2b7b479d6040';
+        const params = {
+            bookstoreId: '6bd895ce-af7a-451a-8b25-50c2876e162a',
+            bookId: 'ba48ba34-6609-4468-aa5e-2b7b479d6040'
+        };
         const res = mockResponse();
-        const req = mockRequest(bookstoreId, bookId);
+        const req = mockRequest(params, null);
         const book = await BookCtrl.apiGetBookByBookstoreId(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(book.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6040');
-        expect(book.bookstoreId).toEqual('6bd895ce-af7a-451a-8b25-50c2876e162a');
+        expect(book.id).toEqual(params.bookId);
+        expect(book.bookstoreId).toEqual(params.bookstoreId);
         expect(book.length).toBe(undefined);
     });
 
     test('should add book', async () => {
-        const bookToAdd = {
-            'id': 'ba48ba34-6609-4468-aa5e-2b7b479d6053',
-            'title': 'The Name of the Rose',
-            'author': 'Umberto Eco',
-            'genre': 'Historical Mystery',
-            'description': 'A novel.',
-            'price': '22.29',
-            'bookstoreId': '6bd895ce-af7a-451a-8b25-50c2876e162e'
+        const body = {
+            id: 'ba48ba34-6609-4468-aa5e-2b7b479d6053',
+            title: 'The Name of the Rose',
+            author: 'Umberto Eco',
+            genre: 'Historical Mystery',
+            description: 'A novel.',
+            price: '22.29',
+            bookstoreId: '6bd895ce-af7a-451a-8b25-50c2876e162e'
         };
-        const req = mockRequest(bookToAdd['bookstoreId'], bookToAdd['id']);
-        req.body = bookToAdd;
+        const req = mockRequest(null, body);
         const res = mockResponse();
         const addedBook = await BookCtrl.apiAddBook(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(addedBook.id).toEqual(bookToAdd.id);
-        expect(addedBook.title).toEqual(bookToAdd.title);
-        expect(addedBook.bookstoreId).toEqual(bookToAdd.bookstoreId);
+        expect(addedBook.id).toEqual(body.id);
+        expect(addedBook.title).toEqual(body.title);
+        expect(addedBook.bookstoreId).toEqual(body.bookstoreId);
     });
 
     test('should update a book', async () => {
-        const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
-        const bookToUpdate = {
-            'description': 'A italian novel.',
-            'price': '32.29'
+        const params = {
+            bookId: 'ba48ba34-6609-4468-aa5e-2b7b479d6053'
         };
-        const req = mockRequest(null, id);
-        req.body = bookToUpdate;
+        const body = {
+            description: 'A italian novel.',
+            price: 32.29
+        };
+        const req = mockRequest(params, body);
         const res = mockResponse();
         const numberOfUpdatedBooks = await BookCtrl.apiUpdateBook(req, res);
-        const updatedBook = await BookDAO.getBookById(id);
+        const updatedBook = await BookDAO.getBookById(params.bookId);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(numberOfUpdatedBooks.pop()).toBe(1);
-        expect(updatedBook.id).toEqual('ba48ba34-6609-4468-aa5e-2b7b479d6053');
+        expect(updatedBook.id).toEqual(params.bookId);
         expect(updatedBook.title).toEqual('The Name of the Rose');
-        expect(updatedBook.description).toEqual('A italian novel.');
-        expect(updatedBook.price).toEqual(32.29);
+        expect(updatedBook.description).toEqual(body.description);
+        expect(updatedBook.price).toEqual(body.price);
     });
 
     test('should delete book', async () => {
         const id = 'ba48ba34-6609-4468-aa5e-2b7b479d6053';
-        const req = mockRequest(null, id);
+        const params = {
+            bookId: 'ba48ba34-6609-4468-aa5e-2b7b479d6053'
+        };
+        const req = mockRequest(params, null);
         const res = mockResponse();
         const numberOfDeletedBooks = await BookCtrl.apiDeleteBook(req, res);
         const book = await BookDAO.getBookById(id);
