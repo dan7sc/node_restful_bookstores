@@ -34,7 +34,7 @@ export default class BookstoreController {
         try {
             const newBookstore = await BookstoreDAO.addBookstore(data);
             res.status(200);
-            res.setHeader('Content-Type', 'appication/json');
+            res.setHeader('Content-Type', 'application/json');
             res.json(newBookstore);
             return newBookstore;
         } catch (error) {
