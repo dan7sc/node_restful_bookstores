@@ -3,7 +3,7 @@ import CustomerCtrl from '../controllers/customer';
 
 const router = new Router();
 
-router.route('/')
+router.route('/signup')
     .post(CustomerCtrl.apiAddCustomer);
 router.route('/:customerId')
     .get(CustomerCtrl.apiGetCustomerById)

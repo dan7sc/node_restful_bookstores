@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 export default (sequelize, DataType) => {
     const Customer = sequelize.define('Customer', {
         id: {
@@ -18,6 +20,20 @@ export default (sequelize, DataType) => {
         lastName: {
             type: DataType.STRING(100),
             field: 'last_name',
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        username: {
+            type: DataType.STRING(100),
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+        password: {
+            type: DataType.STRING(1024),
             allowNull: false,
             validate: {
                 notEmpty: true
@@ -49,6 +65,13 @@ export default (sequelize, DataType) => {
         freezeTableName: true,
     });
 
+    Customer.addHook('beforeCreate', (customer) => {
+        return hashPassword(customer.password)
+            .then(hashedPassword => {
+                customer.password = hashedPassword;
+            });
+    });
+
     Customer.associate = (models) => {
         Customer.hasMany(models.Bookstore, {
             foreignKey: 'customerId',
@@ -58,3 +81,9 @@ export default (sequelize, DataType) => {
 
     return Customer;
 }
+
+const hashPassword = async (password) => {
+    const saltRound = 11;
+    const hashedPassword = await bcrypt.hash(password, saltRound);
+    return hashedPassword;
+};
