@@ -1,8 +1,10 @@
 import CustomerDAO from '../dao/customer';
+import bcrypt from 'bcryptjs';
 
 export default class CustomerController {
    static async apiAddCustomer(req, res) {
-        const data = req.body;
+       const { password, ...data } = req.body;
+       data.password = await hashPassword(password);
         try {
             const newCustomer = await CustomerDAO.addCustomer(data);
             res.status(200);
@@ -46,4 +48,15 @@ export default class CustomerController {
             return error;
         }
     }
+}
+
+const hashPassword = async (password) => {
+    const saltRound = 11;
+    const hashedPassword = await bcrypt.hash(password, saltRound);
+    return hashedPassword;
+};
+
+const verifyPassword = async (password, hash) => {
+    const isPassword = await bcrypt.compare(password, hash);
+    return isPassword;
 }
