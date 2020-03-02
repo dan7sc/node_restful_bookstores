@@ -17,10 +17,12 @@ describe('customer dao', () => {
     test('should add a customer', async () => {
         const customerToAdd = {
             id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc66',
-            firstName: 'Test',
-            lastName: 'Silva',
-            email: 'test@fake.com',
-            picture: 'test_customer_image.png'
+            firstName: 'Carlos',
+            lastName: 'Chaplin',
+            username: 'carlitos',
+            password: 'carchap',
+            email: 'carlitos@fake.com',
+            picture: 'carlitos_image.png'
         };
         const addedCustomer = await CustomerDAO.addCustomer(customerToAdd);
         expect(addedCustomer.id).toEqual(customerToAdd.id);

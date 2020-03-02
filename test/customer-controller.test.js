@@ -39,10 +39,12 @@ describe('customer ctrl', () => {
     test('should add customer', async () => {
         const body = {
             id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc66',
-            firstName: 'Test',
-            lastName: 'Silva',
-            email: 'test@fake.com',
-            picture: 'test_customer_image.png'
+            firstName: 'Carlos',
+            lastName: 'Chaplin',
+            username: 'carlitos',
+            password: 'carchap',
+            email: 'carlitos@fake.com',
+            picture: 'carlitos_image.png'
         };
         const req = mockRequest(null, body);
         const res = mockResponse();
