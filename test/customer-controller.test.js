@@ -71,4 +71,15 @@ describe('customer ctrl', () => {
         expect(numberOfDeletedCustomers).toBe(1);
         expect(customer).toEqual(null);
     });
+
+    test('should verify password', async () => {
+        const email = 'dansan@fake.com';
+        const password = 'mysecretpassword';
+        const { customer, isPassword } = await CustomerCtrl.apiVerifyPassword(email, password);
+        expect(isPassword).toBe(true);
+        expect(customer.id).toEqual('9f933f19-d3c6-4fa1-a161-0a2a052fdc65');
+        expect(customer.lastName).toEqual('Santiago');
+        expect(customer.email).toEqual('dansan@fake.com');
+        expect(customer.length).toBe(undefined);
+    });
 });
