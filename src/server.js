@@ -4,12 +4,15 @@ import logger from 'morgan';
 import bookstore from '../src/routes/bookstore';
 import book from '../src/routes/book';
 import customer from '../src/routes/customer';
+import auth from '../src/auth/auth';
 
 const app = express();
 
 process.env.NODE_ENV !== 'prod' && app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(auth.initialize());
 
 app.use('/api/v1/customers', customer);
 app.use('/api/v1/bookstores', bookstore);

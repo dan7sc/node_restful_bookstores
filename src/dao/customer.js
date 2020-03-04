@@ -31,6 +31,17 @@ export default class CustomerDAO {
         }
     }
 
+    static async getCustomerByEmail(email) {
+        try {
+            const options = { email: email };
+            const customer = await Customer.findOne({ where: options });
+            return customer;
+        } catch(error) {
+            console.log(`Could not get customer with email ${email}: ${error}`);
+            return error;
+        }
+    }
+
     static async deleteCustomer(id) {
         try {
             const options = { id: id };

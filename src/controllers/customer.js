@@ -1,5 +1,6 @@
 import CustomerDAO from '../dao/customer';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export default class CustomerController {
    static async apiAddCustomer(req, res) {
@@ -48,6 +49,35 @@ export default class CustomerController {
             return error;
         }
     }
+
+    static async apiVerifyPassword(email, password) {
+        try {
+            const customer = await CustomerDAO.getCustomerByEmail(email);
+            const hash = customer.password;
+            const isPassword = await verifyPassword(password, hash);
+            return { customer, isPassword };
+        } catch(error) {
+            return error;
+        }
+    }
+
+    static async apiGetToken(req, res) {
+        const customerId = req.params;
+        const payload = customerId;
+        const secretKey = process.env.TOKEN_SECRET_KEY;
+        const options = { expiresIn: 1200 };
+        try {
+            const token = jwt.sign(payload, secretKey, options);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            res.json({token});
+            return token;
+        } catch(error) {
+            res.status(500);
+            res.json({error});
+            return error;
+        }
+    }
 }
 
 const hashPassword = async (password) => {
@@ -59,4 +89,4 @@ const hashPassword = async (password) => {
 const verifyPassword = async (password, hash) => {
     const isPassword = await bcrypt.compare(password, hash);
     return isPassword;
-}
+};
