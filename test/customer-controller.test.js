@@ -72,6 +72,19 @@ describe('customer ctrl', () => {
         expect(customer).toEqual(null);
     });
 
+    test('should get token', async () => {
+        const params = {
+            customerId: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
+        };
+        const req = mockRequest(params, null);
+        const res = mockResponse();
+        const token = await CustomerCtrl.apiGetToken(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+        expect(typeof token).toEqual('string');
+        expect(token.length).toBe(197);
+    });
+
     test('should verify password', async () => {
         const email = 'dansan@fake.com';
         const password = 'mysecretpassword';
