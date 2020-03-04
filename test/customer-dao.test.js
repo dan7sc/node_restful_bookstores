@@ -39,4 +39,13 @@ describe('customer dao', () => {
         expect(numberOfDeletedCustomer).toBe(1);
         expect(customer).toEqual(null);
     });
+
+    test('should get customer by email', async () => {
+        const email = 'dansan@fake.com';
+        const customer = await CustomerDAO.getCustomerByEmail(email);
+        expect(customer.firstName).toEqual('Daniel');
+        expect(customer.lastName).toEqual('Santiago');
+        expect(customer.email).toEqual('dansan@fake.com');
+        expect(customer.length).toBe(undefined);
+    });
 });
