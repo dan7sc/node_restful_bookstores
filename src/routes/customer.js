@@ -6,7 +6,7 @@ const router = new Router();
 
 router.route('/signup')
     .post(CustomerCtrl.apiAddCustomer);
-router.route('/:customerId/login')
+router.route('/login')
     .all(localAuth.authenticate())
     .post(CustomerCtrl.apiGetToken);
 router.route('/:customerId')
