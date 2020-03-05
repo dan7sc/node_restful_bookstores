@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import CustomerCtrl from '../controllers/customer';
 import localAuth from '../auth/localAuth';
+import jwtAuth from '../auth/jwtAuth';
 
 const router = new Router();
 
@@ -10,6 +11,7 @@ router.route('/login')
     .all(localAuth.authenticate())
     .post(CustomerCtrl.apiGetToken);
 router.route('/:customerId')
+    .all(jwtAuth.authenticate())
     .get(CustomerCtrl.apiGetCustomerById)
     .delete(CustomerCtrl.apiDeleteCustomer);
 

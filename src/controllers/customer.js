@@ -61,8 +61,17 @@ export default class CustomerController {
         }
     }
 
+    static async apiGetCustomerByEmail(email) {
+        try {
+            const customer = await CustomerDAO.getCustomerByEmail(email);
+            return customer;
+        } catch(error) {
+            return error;
+        }
+    }
+
     static async apiGetToken(req, res) {
-        const payload = { payloadString: 'vbSI.sInBhf?c3N3b3-JkIjoi_bXlzZWNyZ'};
+        const payload = { email: req.body.email};
         const secretKey = process.env.TOKEN_SECRET_KEY;
         const options = { expiresIn: 1200 };
         try {
