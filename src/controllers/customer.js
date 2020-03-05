@@ -62,8 +62,7 @@ export default class CustomerController {
     }
 
     static async apiGetToken(req, res) {
-        const customerId = req.params;
-        const payload = customerId;
+        const payload = { payloadString: 'vbSI.sInBhf?c3N3b3-JkIjoi_bXlzZWNyZ'};
         const secretKey = process.env.TOKEN_SECRET_KEY;
         const options = { expiresIn: 1200 };
         try {
