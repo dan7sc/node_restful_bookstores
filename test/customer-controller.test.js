@@ -82,7 +82,7 @@ describe('customer ctrl', () => {
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(typeof token).toEqual('string');
-        expect(token.length).toBe(200);
+        expect(token.length).toBeGreaterThan(70);
     });
 
     test('should verify password', async () => {
@@ -94,5 +94,13 @@ describe('customer ctrl', () => {
         expect(customer.lastName).toEqual('Santiago');
         expect(customer.email).toEqual('dansan@fake.com');
         expect(customer.length).toBe(undefined);
+    });
+
+    test('should get a customer by email', async () => {
+        const email = 'dansan@fake.com';
+        const customer = await CustomerCtrl.apiGetCustomerByEmail(email);
+        expect(customer.id).toEqual('9f933f19-d3c6-4fa1-a161-0a2a052fdc65');
+        expect(customer.lastName).toEqual('Santiago');
+        expect(customer.email).toEqual('dansan@fake.com');
     });
 });
