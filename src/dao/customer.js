@@ -1,9 +1,11 @@
 let Customer;
+let Op;
 
 export default class CustomerDAO {
     static async injectDB(conn) {
         try {
             Customer = conn.models.Customer;
+            Op = conn.Sequelize.Op;
         }
         catch(error) {
             console.error(`Unable to establish a connection: ${error}`);
@@ -12,8 +14,10 @@ export default class CustomerDAO {
 
     static async addCustomer(data) {
         try {
-            const newCustomer = await Customer.create(data);
-            return newCustomer;
+            const { email, username } = { ...data };
+            const query = { [Op.or]: [{ email }, { username }] };
+            const [result, isCreated] = await Customer.findOrCreate({ where: query, defaults: data });
+            return [result, isCreated];
         } catch(error) {
             console.log(`Could not add customer: ${error}`);
             return error;
