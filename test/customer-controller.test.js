@@ -36,26 +36,82 @@ describe('customer ctrl', () => {
         expect(customer.length).toBe(undefined);
     });
 
-    test('should add customer', async () => {
-        const body = {
-            id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc66',
-            firstName: 'Carlos',
-            lastName: 'Chaplin',
-            username: 'carlitos',
-            password: 'carchap',
-            email: 'carlitos@fake.com',
-            picture: 'carlitos_image.png'
-        };
-        const req = mockRequest(null, body);
-        const res = mockResponse();
-        const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(addedCustomer.id).toEqual(body.id);
-        expect(addedCustomer.firstName).toEqual(body.firstName);
-        expect(addedCustomer.lastName).toEqual(body.lastName);
-        expect(addedCustomer.picture).toEqual(body.picture);
-        expect(addedCustomer.email).toEqual(body.email);
+    describe('should add customer', () => {
+        test('customer not registered', async () => {
+            const body = {
+                id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc66',
+                firstName: 'Carlos',
+                lastName: 'Chaplin',
+                password: 'carchap',
+                username: 'carlitos',
+                email: 'carlitos@fake.com',
+                picture: 'carlitos_image.png'
+            };
+            const req = mockRequest(null, body);
+            const res = mockResponse();
+            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+            expect(addedCustomer.message.firstName).toEqual(body.firstName);
+            expect(addedCustomer.message.lastName).toEqual(body.lastName);
+            expect(addedCustomer.message.picture).toEqual(body.picture);
+            expect(addedCustomer.message.username).toEqual(body.username);
+            expect(addedCustomer.message.email).toEqual(body.email);
+        });
+
+        test('customer with email already registered', async () => {
+            const body = {
+                firstName: 'Alpha',
+                lastName: 'Omega',
+                username: 'alpha',
+                password: 'alpha12345',
+                email: 'carlitos@fake.com',
+                picture: 'alpha_image.png'
+            };
+            const message = 'Email is already registered';
+            const req = mockRequest(null, body);
+            const res = mockResponse();
+            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+            expect(addedCustomer.message).toEqual(message);
+        });
+
+        test('customer with username already registered', async () => {
+            const body = {
+                firstName: 'Alpha',
+                lastName: 'Omega',
+                username: 'carlitos',
+                password: 'alpha12345',
+                email: 'alpha@fake.com',
+                picture: 'alpha_image.png'
+            };
+            const message = 'Username is already registered';
+            const req = mockRequest(null, body);
+            const res = mockResponse();
+            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+            expect(addedCustomer.message).toEqual(message);
+        });
+
+        test('customer with email and username already registered', async () => {
+            const body = {
+                firstName: 'Alpha',
+                lastName: 'Omega',
+                username: 'carlitos',
+                password: 'alpha12345',
+                email: 'carlitos@fake.com',
+                picture: 'alpha_image.png'
+            };
+            const message = 'Email and username are already registered';
+            const req = mockRequest(null, body);
+            const res = mockResponse();
+            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
+            expect(addedCustomer.message).toEqual(message);
+        });
     });
 
     test('should delete customer', async () => {
