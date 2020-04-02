@@ -4,14 +4,29 @@ import jwt from 'jsonwebtoken';
 
 export default class CustomerController {
    static async apiAddCustomer(req, res) {
+       let response;
        const { password, ...data } = req.body;
        data.password = await hashPassword(password);
-        try {
-            const newCustomer = await CustomerDAO.addCustomer(data);
-            res.status(200);
+       try {
+            const [result, isCreated] = await CustomerDAO.addCustomer(data);
+            if (isCreated) {
+                res.status(200);
+                const { firstName, lastName, picture, username, email } = { ...result.dataValues };
+                const newCustomer = { firstName, lastName, picture, username, email };
+                response = {message: newCustomer};
+            } else {
+                res.status(400);
+                const { email, username } = { ...result.dataValues };
+                if (email === data.email && username !== data.username)
+                    response = { message: 'Email is already registered' };
+                else if (username === data.username && email !== data.email)
+                    response = { message: 'Username is already registered' };
+                else
+                    response = { message: 'Email and username are already registered' };
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(newCustomer);
-            return newCustomer;
+            res.json(response);
+            return response;
         } catch (error) {
             res.status(500);
             res.json({error});
