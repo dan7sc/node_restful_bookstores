@@ -38,13 +38,14 @@ export default class CustomerController {
         let result, response;
         try {
             if (currentId === customerId) {
+                res.status(200);
                 result = await CustomerDAO.getCustomerById(customerId);
                 const { id, firstName, lastName, picture, email, username } = { ...result.dataValues };
                 response = { id, firstName, lastName, picture, email, username };
             } else {
+                res.status(400);
                 response = { message: 'Unauthorized' };
             }
-            res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(response);
             return response;
