@@ -100,12 +100,11 @@ export default class CustomerController {
             const token = jwt.sign(payload, secretKey, options);
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            res.json({token});
-            return token;
-        } catch(error) {
+            res.json({ token });
+        } catch(e) {
+            const error = `Error getting token: ${e}`;
             res.status(500);
-            res.json({error});
-            return error;
+            res.json({ error });
         }
     }
 }
