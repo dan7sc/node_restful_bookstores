@@ -60,18 +60,24 @@ export default class CustomerController {
     }
 
     static async apiDeleteCustomer(req, res) {
-        const id = req.params.customerId;
+        const customerId = req.params.customerId;
+        const currentId = req.user.dataValues.id;
+        let response;
         try {
-            const deletedCustomer = await CustomerDAO.deleteCustomer(id);
-            res.status(200);
+            if (currentId === customerId) {
+                res.status(200);
+                response = await CustomerDAO.deleteCustomer(customerId);
+            } else {
+                res.status(400);
+                response = 'Customer could not be deleted';
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(deletedCustomer);
-            return deletedCustomer;
-        } catch(error) {
+            res.json({ response });
+        } catch(e) {
+            const error = `Error deleting customer: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
-            return error;
+            res.json({ error });
         }
     }
 
