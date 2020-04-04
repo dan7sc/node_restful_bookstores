@@ -28,6 +28,7 @@ export default class CustomerController {
         } catch (e) {
             const error = `Error creating customer account: ${e}`;
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({ error });
         }
     }
@@ -52,6 +53,7 @@ export default class CustomerController {
         }
         catch (error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -67,6 +69,7 @@ export default class CustomerController {
             return deletedCustomer;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -107,6 +110,7 @@ export default class CustomerController {
         } catch(e) {
             const error = `Error getting token: ${e}`;
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({ error });
         }
     }
