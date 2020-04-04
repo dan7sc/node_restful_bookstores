@@ -3,34 +3,32 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export default class CustomerController {
-   static async apiAddCustomer(req, res) {
-       let response;
-       const { password, ...data } = req.body;
-       data.password = await hashPassword(password);
-       try {
-            const [result, isCreated] = await CustomerDAO.addCustomer(data);
+    static async apiAddCustomer(req, res) {
+        let response;
+        const { password, ...data } = req.body;
+        data.password = await hashPassword(password);
+        try {
+            const [newCustomer, isCreated] = await CustomerDAO.addCustomer(data);
+            delete newCustomer.password;
             if (isCreated) {
                 res.status(200);
-                const { firstName, lastName, picture, username, email } = { ...result.dataValues };
-                const newCustomer = { firstName, lastName, picture, username, email };
-                response = {message: newCustomer};
+                response = `Customer with username ${newCustomer.username} is registered`;
             } else {
                 res.status(400);
-                const { email, username } = { ...result.dataValues };
+                const { email, username } = { ...newCustomer };
                 if (email === data.email && username !== data.username)
-                    response = { message: 'Email is already registered' };
+                    response = 'Email is already registered';
                 else if (username === data.username && email !== data.email)
-                    response = { message: 'Username is already registered' };
+                    response = 'Username is already registered';
                 else
-                    response = { message: 'Email and username are already registered' };
+                    response = 'Email and username are already registered';
             }
             res.setHeader('Content-Type', 'application/json');
-            res.json(response);
-            return response;
-        } catch (error) {
+            res.json({ response });
+        } catch (e) {
+            const error = `Error creating customer account: ${e}`;
             res.status(500);
-            res.json({error});
-            return error;
+            res.json({ error });
         }
     }
 
