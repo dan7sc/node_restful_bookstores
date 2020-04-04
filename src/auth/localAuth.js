@@ -12,8 +12,9 @@ const options = {
 };
 
 const verifyCustomer = async (email, password, done) => {
-    const { customer, isPassword }  = await CustomerCtrl.apiVerifyPassword(email, password);
-    if (isPassword) done(null, customer);
+    const { customer, isPassword, error }  = await CustomerCtrl.apiVerifyPassword(email, password);
+    if (error) done(error, false);
+    else if (isPassword) done(null, customer);
     else done(null, false);
 };
 
