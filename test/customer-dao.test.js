@@ -91,10 +91,11 @@ describe('customer dao', () => {
 
     test('should delete customer', async () => {
         const customerId = '9f933f19-d3c6-4fa1-a161-0a2a052fdc66';
-        const numberOfDeletedCustomer = await CustomerDAO.deleteCustomer(customerId);
+        const numberOfDeletedCustomers = await CustomerDAO.deleteCustomer(customerId);
         const customer = await CustomerDAO.getCustomerById(customerId);
-        expect(numberOfDeletedCustomer).toBe(1);
-        expect(customer).toEqual(null);
+        expect(numberOfDeletedCustomers).toBe(1);
+        expect(customer.id).toEqual(undefined);
+        expect(typeof customer.error).not.toEqual('undefined');
     });
 
     test('should get customer by email', async () => {
