@@ -11,12 +11,10 @@ const options = {
 };
 
 const verifyToken = async (payload, done) => {
-    try {
-        const customer = await CustomerCtrl.apiGetCustomerByEmail(payload.email);
-        done(null, customer);
-    } catch(error) {
-        done(error, null);
-    }
+    const { customer, error } = await CustomerCtrl.apiGetCustomerByEmail(payload.email);
+    if (error) done(error, false);
+    else if (customer) done(null, customer);
+    else done(null, false);
 };
 
 const jwtStrategy = new Strategy(options, verifyToken);

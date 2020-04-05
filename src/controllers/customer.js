@@ -97,9 +97,10 @@ export default class CustomerController {
     static async apiGetCustomerByEmail(email) {
         try {
             const customer = await CustomerDAO.getCustomerByEmail(email);
-            return customer;
-        } catch(error) {
-            return error;
+            return { customer };
+        } catch(e) {
+            const error = `Error getting customer by email: ${e}`;
+            return { error };
         }
     }
 
