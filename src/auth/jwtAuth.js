@@ -20,10 +20,6 @@ const verifyToken = async (payload, done) => {
 const jwtStrategy = new Strategy(options, verifyToken);
 passport.use(jwtStrategy);
 
-passport.serializeUser((customer, done) => {
-    done(null, customer.id);
-});
-
 jwtAuth.authenticate = () => {
     return passport.authenticate('jwt', { session: false });
 };
