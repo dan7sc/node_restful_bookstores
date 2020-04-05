@@ -36,26 +36,25 @@ export default class CustomerController {
     static async apiGetCustomerById(req, res) {
         const customerId = req.params.customerId;
         const currentId = req.user.dataValues.id;
-        let result, response;
+        let response;
         try {
             if (currentId === customerId) {
                 res.status(200);
-                result = await CustomerDAO.getCustomerById(customerId);
+                const result = await CustomerDAO.getCustomerById(customerId);
                 const { id, firstName, lastName, picture, email, username } = { ...result.dataValues };
                 response = { id, firstName, lastName, picture, email, username };
             } else {
                 res.status(400);
-                response = { message: 'Unauthorized' };
+                response = 'Unauthorized';
             }
             res.setHeader('Content-Type', 'application/json');
-            res.json(response);
-            return response;
+            res.json({ response });
         }
-        catch (error) {
+        catch (e) {
+            const error = `Error getting customer by id: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
-            return error;
+            res.json({ error });
         }
     }
 
