@@ -22,7 +22,7 @@ const localStrategy = new LocalStrategy(options, verifyCustomer);
 passport.use(localStrategy);
 
 localAuth.authenticate = () => {
-    return passport.authenticate('local');
+    return passport.authenticate('local', { session: false });
 };
 
 export default localAuth;
