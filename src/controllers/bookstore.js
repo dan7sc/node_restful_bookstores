@@ -7,11 +7,9 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(bookstores);
-            return bookstores;
         } catch(error) {
             res.status(500);
             res.json({error});
-            return error;
         }
     }
 
@@ -21,11 +19,9 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(deletedBookstores);
-            return deletedBookstores;
         } catch(error) {
             res.status(500);
             res.json({error});
-            return error;
         }
     }
 
@@ -36,11 +32,9 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(newBookstore);
-            return newBookstore;
         } catch (error) {
             res.status(500);
             res.json({error});
-            return error;
         }
     }
 
@@ -51,12 +45,10 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(bookstore);
-            return bookstore;
         }
         catch (error) {
             res.status(500);
             res.json({error});
-            return error;
         }
     }
 
@@ -68,11 +60,9 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(updatedBookstore);
-            return updatedBookstore;
         } catch(error) {
             res.status(500);
             res.json({error});
-            return error;
         }
     }
 
@@ -83,11 +73,9 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(deletedBookstore);
-            return deletedBookstore;
         } catch(error) {
             res.status(500);
             res.json({error});
-            return error;
         }
     }
 }
