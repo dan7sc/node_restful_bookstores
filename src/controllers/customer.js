@@ -82,10 +82,9 @@ export default class CustomerController {
 
     static async apiVerifyPassword(email, password) {
         try {
-            const resultedCustomer = await CustomerDAO.getCustomerByEmail(email);
-            const hash = resultedCustomer.password;
+            const customer = await CustomerDAO.getCustomerByEmail(email);
+            const hash = customer.password;
             const isPassword = await verifyPassword(password, hash);
-            const customer = resultedCustomer.dataValues;
             delete customer.password;
             return { customer, isPassword };
         } catch(e) {
