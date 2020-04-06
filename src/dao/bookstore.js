@@ -31,16 +31,6 @@ export default class BookstoreDAO {
         }
     }
 
-    static async deleteBookstores() {
-        try {
-            const deletedBookstores = await Bookstore.destroy({ where: {} });
-            return deletedBookstores;
-        } catch(e) {
-            const error = `Could not delete bookstores: ${e}`;
-            return { error };
-        }
-    }
-
     static async getBookstoreById(id) {
         try {
             const options = { id: id };
