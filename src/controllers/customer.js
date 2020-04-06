@@ -35,14 +35,14 @@ export default class CustomerController {
 
     static async apiGetCustomerById(req, res) {
         const customerId = req.params.customerId;
-        const currentId = req.user.dataValues.id;
+        const currentId = req.user.id;
         let response;
         try {
             if (currentId === customerId) {
                 res.status(200);
-                const result = await CustomerDAO.getCustomerById(customerId);
-                const { id, firstName, lastName, picture, email, username } = { ...result.dataValues };
-                response = { id, firstName, lastName, picture, email, username };
+                const customer = await CustomerDAO.getCustomerById(customerId);
+                delete customer.password;
+                response = customer;
             } else {
                 res.status(400);
                 response = 'Unauthorized';
@@ -60,7 +60,7 @@ export default class CustomerController {
 
     static async apiDeleteCustomer(req, res) {
         const customerId = req.params.customerId;
-        const currentId = req.user.dataValues.id;
+        const currentId = req.user.id;
         let response;
         try {
             if (currentId === customerId) {
