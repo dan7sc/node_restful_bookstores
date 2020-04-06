@@ -5,8 +5,8 @@ export default class BookstoreDAO {
         try {
             Bookstore = conn.models.Bookstore;
         }
-        catch(error) {
-            console.error(`Unable to establish a connection: ${error}`);
+        catch(e) {
+            console.error(`Unable to establish a connection: ${e}`);
         }
     }
 
@@ -15,9 +15,9 @@ export default class BookstoreDAO {
             const bookstores = await Bookstore.findAll({});
             return bookstores;
         }
-        catch(error) {
-            console.error(`Could not get bookstores: ${error}`);
-            return error;
+        catch(e) {
+            const error = `Could not get bookstores: ${e}`;
+            return { error };
         }
     }
 
@@ -25,9 +25,9 @@ export default class BookstoreDAO {
         try {
             const newBookstore = await Bookstore.create(data);
             return newBookstore;
-        } catch(error) {
-            console.log(`Could not add bookstore: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not add bookstore: ${e}`;
+            return { error };
         }
     }
 
@@ -35,9 +35,9 @@ export default class BookstoreDAO {
         try {
             const deletedBookstores = await Bookstore.destroy({ where: {} });
             return deletedBookstores;
-        } catch(error) {
-            console.log(`Could not delete bookstores: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not delete bookstores: ${e}`;
+            return { error };
         }
     }
 
@@ -46,9 +46,9 @@ export default class BookstoreDAO {
             const options = { id: id };
             const bookstore = await Bookstore.findOne({ where: options });
             return bookstore;
-        } catch(error) {
-            console.log(`Could not get bookstore with id ${id}: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not get bookstore with id ${id}: ${e}`;
+            return { error };
         }
     }
 
@@ -57,9 +57,9 @@ export default class BookstoreDAO {
             const options = { id: id };
             const updatedBookstore = await Bookstore.update(data, { where: options });
             return updatedBookstore;
-        } catch(error) {
-            console.log(`Could not update bookstore: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not update bookstore: ${e}`;
+            return { error };
         }
     }
 
@@ -68,9 +68,9 @@ export default class BookstoreDAO {
             const options = { id: id };
             const deletedBookstore = await Bookstore.destroy({ where: options });
             return deletedBookstore;
-        } catch(error) {
-            console.log(`Could not delete bookstore: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not delete bookstore: ${e}`;
+            return { error };
         }
     }
  }
