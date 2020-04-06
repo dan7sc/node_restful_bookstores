@@ -7,10 +7,11 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(bookstores);
-        } catch(error) {
+        } catch(e) {
+            const error = `Error getting bookstores: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
+            res.json({ error });
         }
     }
 
@@ -20,10 +21,11 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(deletedBookstores);
-        } catch(error) {
+        } catch(e) {
+            const error = `Error deleting all bookstores: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
+            res.json({ error });
         }
     }
 
@@ -34,10 +36,11 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(newBookstore);
-        } catch (error) {
+        } catch (e) {
+            const error = `Error adding bookstore: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
+            res.json({ error });
         }
     }
 
@@ -49,10 +52,11 @@ export default class BookstoreController {
             res.setHeader('Content-Type', 'application/json');
             res.json(bookstore);
         }
-        catch (error) {
+        catch (e) {
+            const error = `Error getting bookstore by id: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
+            res.json({ error });
         }
     }
 
@@ -64,10 +68,11 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(updatedBookstore);
-        } catch(error) {
+        } catch(e) {
+            const error = `Error updating bookstore data: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
+            res.json({ error });
         }
     }
 
@@ -78,10 +83,11 @@ export default class BookstoreController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(deletedBookstore);
-        } catch(error) {
+        } catch(e) {
+            const error = `Error deleting bookstore: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.json({error});
+            res.json({ error });
         }
     }
 }
