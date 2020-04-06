@@ -15,20 +15,6 @@ export default class BookstoreController {
         }
     }
 
-    static async apiDeleteBookstores(req, res) {
-        try {
-            const deletedBookstores = await BookstoreDAO.deleteBookstores();
-            res.status(200);
-            res.setHeader('Content-Type', 'application/json');
-            res.json(deletedBookstores);
-        } catch(e) {
-            const error = `Error deleting all bookstores: ${e}`;
-            res.status(500);
-            res.setHeader('Content-Type', 'application/json');
-            res.json({ error });
-        }
-    }
-
    static async apiAddBookstore(req, res) {
         const data = req.body;
         try {
