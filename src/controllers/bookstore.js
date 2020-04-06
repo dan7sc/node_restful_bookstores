@@ -9,6 +9,7 @@ export default class BookstoreController {
             res.json(bookstores);
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
         }
     }
@@ -21,6 +22,7 @@ export default class BookstoreController {
             res.json(deletedBookstores);
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
         }
     }
@@ -34,6 +36,7 @@ export default class BookstoreController {
             res.json(newBookstore);
         } catch (error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
         }
     }
@@ -48,6 +51,7 @@ export default class BookstoreController {
         }
         catch (error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
         }
     }
@@ -62,6 +66,7 @@ export default class BookstoreController {
             res.json(updatedBookstore);
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
         }
     }
@@ -75,6 +80,7 @@ export default class BookstoreController {
             res.json(deletedBookstore);
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
         }
     }
