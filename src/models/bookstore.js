@@ -17,6 +17,7 @@ export default (sequelize, DataType) => {
         },
         customerId: {
             type: DataType.UUID,
+            allowNull: false,
             references:{
                 model: 'customer',
                 key: 'id'
