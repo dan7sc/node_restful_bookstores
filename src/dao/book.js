@@ -4,8 +4,8 @@ export default class BookDAO {
     static async injectDB(conn) {
         try {
             Book = conn.models.Book;
-        } catch(error) {
-            console.error(`Unable to establish a connection: ${error}`);
+        } catch(e) {
+            console.error(`Unable to establish a connection: ${e}`);
         }
     }
 
@@ -13,9 +13,9 @@ export default class BookDAO {
         try {
             const books = await Book.findAll({});
             return books;
-        } catch(error) {
-            console.error(`Could not get books: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not get books: ${e}`;
+            return { error };
         }
     }
 
@@ -24,9 +24,9 @@ export default class BookDAO {
             const options = { bookstoreId: id };
             const books = await Book.findAll({ where: options });
             return books;
-        } catch(error) {
-            console.log(`Could not get books from bookstore: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not get books from bookstore: ${e}`;
+            return { error };
         }
     }
 
@@ -34,9 +34,9 @@ export default class BookDAO {
         try {
             const newBook = await Book.create(data);
             return newBook;
-        } catch(error) {
-            console.log(`Could not add book: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not add book: ${e}`;
+            return { error };
         }
     }
 
@@ -45,9 +45,9 @@ export default class BookDAO {
             const options = { id: id };
             const books = await Book.findOne({ where: options });
             return books;
-        } catch(error) {
-            console.error(`Could not get books: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not get books: ${e}`;
+            return { error };
         }
     }
 
@@ -56,9 +56,9 @@ export default class BookDAO {
             const options = { id: bookId, bookstoreId: bookstoreId };
             const book = await Book.findOne({ where: options });
             return book;
-        } catch(error) {
-            console.log(`Could not get book from bookstore: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not get book from bookstore: ${e}`;
+            return { error };
         }
     }
 
@@ -67,9 +67,9 @@ export default class BookDAO {
             const options = { id: id };
             const updatedBook = await Book.update(data, { where: options });
             return updatedBook;
-        } catch(error) {
-            console.log(`Could not update book: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not update book: ${e}`;
+            return { error };
         }
     }
 
@@ -78,9 +78,9 @@ export default class BookDAO {
             const options = { id: id };
             const deletedBook = await Book.destroy({ where: options });
             return deletedBook;
-        } catch(error) {
-            console.log(`Could not delete book: ${error}`);
-            return error;
+        } catch(e) {
+            const error = `Could not delete book: ${e}`;
+            return { error };
         }
     }
 }
