@@ -46,6 +46,22 @@ export default class BookController {
         }
     }
 
+    static async apiGetBookById(req, res) {
+        try {
+            const bookId = req.params.bookId;
+            const book = await BookDAO.getBookById(bookId);
+            res.status(200);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(book);
+            return book;
+        } catch(error) {
+            res.status(500);
+            res.json({error});
+            return error;
+        }
+    }
+
+
     static async apiAddBook(req, res) {
         try {
             const data = req.body;
