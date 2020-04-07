@@ -55,14 +55,23 @@ export default class BookstoreController {
         }
     }
 
-     static async apiUpdateBookstore(req, res) {
+    static async apiUpdateBookstore(req, res) {
+        let response;
         const data = req.body;
         const id = req.params.bookstoreId;
+        const customerId = req.user.id;
         try {
-            const updatedBookstore = await BookstoreDAO.updateBookstore(id, data);
-            res.status(200);
+            const bookstore = await BookstoreDAO.getBookstoreById(id);
+            if (bookstore && bookstore.customerId === customerId) {
+                res.status(200);
+                const numberOfUpdatedBookstores = await BookstoreDAO.updateBookstore(id, data);
+                response = `${numberOfUpdatedBookstores} bookstores updated: ${bookstore.name} updated`;
+            } else {
+                res.status(400);
+                response = 'Not authorized to update this bookstore data';
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(updatedBookstore);
+            res.json(response);
         } catch(e) {
             const error = `Error updating bookstore data: ${e}`;
             res.status(500);
