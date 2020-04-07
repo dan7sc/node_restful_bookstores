@@ -10,6 +10,7 @@ export default class BookController {
             return books;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -25,6 +26,7 @@ export default class BookController {
             return books;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -42,6 +44,7 @@ export default class BookController {
         } catch(error) {
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -57,6 +60,7 @@ export default class BookController {
             return book;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
@@ -75,6 +79,7 @@ export default class BookController {
         } catch(error) {
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -92,6 +97,7 @@ export default class BookController {
         } catch(error) {
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -107,6 +113,7 @@ export default class BookController {
             return deletedBook;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
