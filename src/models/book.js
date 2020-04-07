@@ -29,6 +29,7 @@ export default (sequelize, DataType) => {
         },
         bookstoreId: {
             type: DataType.UUID,
+            allowNull: false,
             references: {
                 model: 'bookstore',
                 key: 'id'
