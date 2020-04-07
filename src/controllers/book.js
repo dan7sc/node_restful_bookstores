@@ -47,7 +47,6 @@ export default class BookController {
             const error = `Error getting book by bookstore: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Type', 'application/json');
             res.json({ error });
             return error;
         }
@@ -64,7 +63,6 @@ export default class BookController {
         } catch(e) {
             const error = `Error getting book by id: ${e}`;
             res.status(500);
-            res.setHeader('Content-Type', 'application/json');
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
             return error;
@@ -84,7 +82,6 @@ export default class BookController {
             const error = `Error adding book: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Type', 'application/json');
             res.json({ error });
             return error;
         }
@@ -103,7 +100,6 @@ export default class BookController {
             const error = `Error updating book data: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
-            res.setHeader('Content-Type', 'application/json');
             res.json({ error });
             return error;
         }
@@ -120,7 +116,6 @@ export default class BookController {
         } catch(e) {
             const error = `Error deleting book: ${e}`;
             res.status(500);
-            res.setHeader('Content-Type', 'application/json');
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
             return error;
