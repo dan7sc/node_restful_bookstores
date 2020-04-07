@@ -41,6 +41,7 @@ export default class BookController {
             return book;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -56,6 +57,7 @@ export default class BookController {
             return book;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -72,6 +74,7 @@ export default class BookController {
             return newBook;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -88,6 +91,7 @@ export default class BookController {
             return updatedBook;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
@@ -103,6 +107,7 @@ export default class BookController {
             return deletedBook;
         } catch(error) {
             res.status(500);
+            res.setHeader('Content-Type', 'application/json');
             res.json({error});
             return error;
         }
