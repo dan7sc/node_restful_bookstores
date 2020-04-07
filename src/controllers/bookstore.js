@@ -15,13 +15,22 @@ export default class BookstoreController {
         }
     }
 
-   static async apiAddBookstore(req, res) {
+    static async apiAddBookstore(req, res) {
+        let response;
         const data = req.body;
+        const customerId = req.user.id;
+        data.customerId = customerId;
         try {
-            const newBookstore = await BookstoreDAO.addBookstore(data);
-            res.status(200);
+            const [newBookstore, isCreated] = await BookstoreDAO.addBookstore(data);
+            if (isCreated) {
+                res.status(200);
+                response = `New bookstore ${newBookstore.name} is created`;
+            } else {
+                res.status(400);
+                response = `Bookstore ${newBookstore.name} already exists`;
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(newBookstore);
+            res.json({ response });
         } catch (e) {
             const error = `Error adding bookstore: ${e}`;
             res.status(500);
