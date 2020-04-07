@@ -81,12 +81,21 @@ export default class BookstoreController {
     }
 
     static async apiDeleteBookstore(req, res) {
+        let response;
         const id = req.params.bookstoreId;
+        const customerId = req.user.id;
         try {
-            const deletedBookstore = await BookstoreDAO.deleteBookstore(id);
-            res.status(200);
+            const bookstore = await BookstoreDAO.getBookstoreById(id);
+            if (bookstore && bookstore.customerId === customerId ) {
+                res.status(200);
+                const numberOfDeletedBookstores = await BookstoreDAO.deleteBookstore(id);
+                response = `${numberOfDeletedBookstores} bookstores deleted: ${bookstore.name} deleted`;
+            } else {
+                res.status(400);
+                response = 'Not authorized to delete this bookstore';
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(deletedBookstore);
+            res.json(response);
         } catch(e) {
             const error = `Error deleting bookstore: ${e}`;
             res.status(500);
