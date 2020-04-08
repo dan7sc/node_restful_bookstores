@@ -31,22 +31,6 @@ export default class BookController {
         }
     }
 
-    static async apiGetBookByBookstoreId(req, res) {
-        try {
-            const bookstoreId = req.params.bookstoreId;
-            const bookId = req.params.bookId;
-            const book = await BookDAO.getBookByBookstoreId(bookstoreId, bookId);
-            res.status(200);
-            res.setHeader('Content-Type', 'application/json');
-            res.json(book);
-        } catch(e) {
-            const error = `Error getting book by bookstore: ${e}`;
-            res.status(500);
-            res.setHeader('Content-Type', 'application/json');
-            res.json({ error });
-        }
-    }
-
     static async apiGetBookById(req, res) {
         try {
             const bookId = req.params.bookId;
