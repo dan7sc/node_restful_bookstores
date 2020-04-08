@@ -69,15 +69,23 @@ export default class BookController {
         }
     }
 
-
     static async apiAddBook(req, res) {
+        let response;
+        const data = req.body;
+        const bookstoreId = req.params.bookstoreId;
+        data.bookstoreId = bookstoreId;
         try {
-            const data = req.body;
-            const newBook = await BookDAO.addBook(data);
-            res.status(200);
+            const [newBook, isCreated] = await BookDAO.addBook(data);
+            if (isCreated) {
+                res.status(200);
+                response = `Book ${newBook.title} is added`;
+            } else {
+                res.status(400);
+                response = `Book ${newBook.title} with same data already exists`;
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(newBook);
-            return newBook;
+            res.json({ response });
+            return response;
         } catch(e) {
             const error = `Error adding book: ${e}`;
             res.status(500);

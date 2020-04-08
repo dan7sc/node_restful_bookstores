@@ -32,8 +32,10 @@ export default class BookDAO {
 
     static async addBook(data) {
         try {
-            const newBook = await Book.create(data);
-            return newBook;
+            const { title, author, genre, description, price, bookstoreId } = { ...data };
+            const query = { title, author, genre, description, price, bookstoreId };
+            const [newBook, isCreated] = await Book.findOrCreate({ where: query, defaults: data });
+            return [newBook, isCreated];
         } catch(e) {
             const error = `Could not add book: ${e}`;
             return { error };
