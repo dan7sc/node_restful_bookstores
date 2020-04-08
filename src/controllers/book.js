@@ -8,13 +8,11 @@ export default class BookController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(books);
-            return books;
         } catch(e) {
             const error = `Error getting books: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 
@@ -25,13 +23,11 @@ export default class BookController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(books);
-            return books;
         } catch(e) {
             const error = `Error getting books from bookstore: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 
@@ -43,13 +39,11 @@ export default class BookController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(book);
-            return book;
         } catch(e) {
             const error = `Error getting book by bookstore: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 
@@ -60,13 +54,11 @@ export default class BookController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(book);
-            return book;
         } catch(e) {
             const error = `Error getting book by id: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 
@@ -93,13 +85,11 @@ export default class BookController {
             }
             res.setHeader('Content-Type', 'application/json');
             res.json({ response });
-            return response;
         } catch(e) {
             const error = `Error adding book: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 
@@ -111,13 +101,11 @@ export default class BookController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(updatedBook);
-            return updatedBook;
         } catch(e) {
             const error = `Error updating book data: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 
@@ -128,13 +116,11 @@ export default class BookController {
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
             res.json(deletedBook);
-            return deletedBook;
         } catch(e) {
             const error = `Error deleting book: ${e}`;
             res.status(500);
             res.setHeader('Content-Type', 'application/json');
             res.json({ error });
-            return error;
         }
     }
 }
