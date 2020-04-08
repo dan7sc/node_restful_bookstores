@@ -53,17 +53,6 @@ export default class BookDAO {
         }
     }
 
-    static async getBookByBookstoreId(bookstoreId, bookId) {
-        try {
-            const options = { id: bookId, bookstoreId: bookstoreId };
-            const book = await Book.findOne({ where: options });
-            return { book };
-        } catch(e) {
-            const error = `Could not get book from bookstore: ${e}`;
-            return { error };
-        }
-    }
-
     static async updateBook(id, data) {
         try {
             const options = { id: id };
