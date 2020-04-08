@@ -1,4 +1,5 @@
 import BookDAO from '../dao/book';
+import BookstoreDAO from '../dao/bookstore';
 
 export default class BookController {
     static async apiGetBooks(req, res) {
@@ -73,15 +74,22 @@ export default class BookController {
         let response;
         const data = req.body;
         const bookstoreId = req.params.bookstoreId;
+        const customerId = req.user.id;
         data.bookstoreId = bookstoreId;
         try {
-            const [newBook, isCreated] = await BookDAO.addBook(data);
-            if (isCreated) {
-                res.status(200);
-                response = `Book ${newBook.title} is added`;
+            const isOwner = await currentCustomerIsOwnerOfBookstore(customerId, bookstoreId);
+            if (isOwner) {
+                const [newBook, isCreated] = await BookDAO.addBook(data);
+                if (isCreated) {
+                    res.status(200);
+                    response = `Book ${newBook.title} is added`;
+                } else {
+                    res.status(400);
+                    response = `Book ${newBook.title} with same data already exists`;
+                }
             } else {
                 res.status(400);
-                response = `Book ${newBook.title} with same data already exists`;
+                response = `Not authorized to add book for this bookstore`;
             }
             res.setHeader('Content-Type', 'application/json');
             res.json({ response });
@@ -130,3 +138,9 @@ export default class BookController {
         }
     }
 }
+
+const currentCustomerIsOwnerOfBookstore = async (currentCustomerId, bookstoreId) => {
+    const { customerId } = await BookstoreDAO.getBookstoreById(bookstoreId);
+    const isOwner = customerId === currentCustomerId;
+    return isOwner;
+};
