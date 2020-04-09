@@ -10,7 +10,7 @@ router.route('/signup')
 router.route('/login')
     .all(localAuth.authenticate())
     .post(CustomerCtrl.apiGetToken);
-router.route('/:customerId')
+router.route('/id/:customerId')
     .all(jwtAuth.authenticate())
     .get(CustomerCtrl.apiGetCustomerById)
     .delete(CustomerCtrl.apiDeleteCustomer);
