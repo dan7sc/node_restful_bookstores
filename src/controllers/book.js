@@ -78,13 +78,24 @@ export default class BookController {
     }
 
     static async apiUpdateBook(req, res) {
+        let response;
+        const data = req.body;
+        const bookId = req.params.bookId;
+        const customerId = req.user.id;
         try {
-            const data = req.body;
-            const id = req.params.bookId;
-            const updatedBook = await BookDAO.updateBook(id, data);
-            res.status(200);
+            const { books } = await BookDAO.getBookById(bookId);
+            const { bookstoreId } = { ...books.dataValues } ;
+            const isOwner = await currentCustomerIsOwnerOfBookstore(customerId, bookstoreId);
+            if (isOwner) {
+                const numberOfUpdatedBooks = await BookDAO.updateBook(bookId, data);
+                res.status(200);
+                response = `${numberOfUpdatedBooks} books updated`;
+            } else {
+                res.status(400);
+                response = `Not authorized to update this book data`;
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(updatedBook);
+            res.json({ response });
         } catch(e) {
             const error = `Error updating book data: ${e}`;
             res.status(500);
