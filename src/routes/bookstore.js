@@ -9,7 +9,7 @@ router.route('/')
 router.route('/new')
     .all(jwtAuth.authenticate())
     .post(BookstoreCtrl.apiAddBookstore);
-router.route('/:bookstoreId')
+router.route('/id/:bookstoreId')
     .get(BookstoreCtrl.apiGetBookstoreById)
     .all(jwtAuth.authenticate())
     .put(BookstoreCtrl.apiUpdateBookstore)
