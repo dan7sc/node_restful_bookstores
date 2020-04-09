@@ -2,17 +2,18 @@ import CustomerDAO from '../src/dao/customer';
 import CustomerCtrl from '../src/controllers/customer';
 
 jest.mock('express');
-const mockRequest = (params, body) => {
+const mockRequest = (params, body, user) => {
     const req = {};
     req.params = params;
     req.body = body;
+    req.user = user;
     return req;
 };
 const mockResponse = () => {
     const res = {};
     res.status = jest.fn().mockReturnValue(res);
     res.setHeader = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue();
+    res.json = jest.fn().mockReturnValue(res);
     return res;
 };
 
@@ -25,15 +26,20 @@ describe('customer ctrl', () => {
         const params = {
             customerId: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
         };
+        const user = {
+            id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
+        };
         const res = mockResponse();
-        const req = mockRequest(params, null);
-        const customer = await CustomerCtrl.apiGetCustomerById(req, res);
+        const req = mockRequest(params, null, user);
+        await CustomerCtrl.apiGetCustomerById(req, res);
+        const customer = res.json.mock.calls[0][0];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(customer.id).toEqual(params.customerId);
-        expect(customer.lastName).toEqual('Santiago');
-        expect(customer.email).toEqual('dansan@fake.com');
-        expect(customer.length).toBe(undefined);
+        expect(customer.response.id).toEqual(params.customerId);
+        expect(customer.response.firstName).toEqual('Daniel');
+        expect(customer.response.lastName).toEqual('Santiago');
+        expect(customer.response.email).toEqual('dansan@fake.com');
+        expect(customer.response.username).toEqual('daniel');
     });
 
     describe('should add customer', () => {
@@ -47,16 +53,15 @@ describe('customer ctrl', () => {
                 email: 'carlitos@fake.com',
                 picture: 'carlitos_image.png'
             };
-            const req = mockRequest(null, body);
+            const response = `Customer with username ${body.username} is registered`;
+            const req = mockRequest(null, body, null);
             const res = mockResponse();
-            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            await CustomerCtrl.apiAddCustomer(req, res);
+            const addedCustomer = res.json.mock.calls[0][0];
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-            expect(addedCustomer.message.firstName).toEqual(body.firstName);
-            expect(addedCustomer.message.lastName).toEqual(body.lastName);
-            expect(addedCustomer.message.picture).toEqual(body.picture);
-            expect(addedCustomer.message.username).toEqual(body.username);
-            expect(addedCustomer.message.email).toEqual(body.email);
+            //expect(res.json).toHaveBeenCalledWith("firstName", body.firstName);
+            expect(addedCustomer.response).toEqual(response);
         });
 
         test('customer with email already registered', async () => {
@@ -68,13 +73,14 @@ describe('customer ctrl', () => {
                 email: 'carlitos@fake.com',
                 picture: 'alpha_image.png'
             };
-            const message = 'Email is already registered';
-            const req = mockRequest(null, body);
+            const response = 'Email is already registered';
+            const req = mockRequest(null, body, null);
             const res = mockResponse();
-            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            await CustomerCtrl.apiAddCustomer(req, res);
+            const addedCustomer = res.json.mock.calls[0][0];
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-            expect(addedCustomer.message).toEqual(message);
+            expect(addedCustomer.response).toEqual(response);
         });
 
         test('customer with username already registered', async () => {
@@ -86,13 +92,14 @@ describe('customer ctrl', () => {
                 email: 'alpha@fake.com',
                 picture: 'alpha_image.png'
             };
-            const message = 'Username is already registered';
-            const req = mockRequest(null, body);
+            const response = 'Username is already registered';
+            const req = mockRequest(null, body, null);
             const res = mockResponse();
-            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            await CustomerCtrl.apiAddCustomer(req, res);
+            const addedCustomer = res.json.mock.calls[0][0];
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-            expect(addedCustomer.message).toEqual(message);
+            expect(addedCustomer.response).toEqual(response);
         });
 
         test('customer with email and username already registered', async () => {
@@ -104,13 +111,14 @@ describe('customer ctrl', () => {
                 email: 'carlitos@fake.com',
                 picture: 'alpha_image.png'
             };
-            const message = 'Email and username are already registered';
-            const req = mockRequest(null, body);
+            const response = 'Email and username are already registered';
+            const req = mockRequest(null, body, null);
             const res = mockResponse();
-            const addedCustomer = await CustomerCtrl.apiAddCustomer(req, res);
+            await CustomerCtrl.apiAddCustomer(req, res);
+            const addedCustomer = res.json.mock.calls[0][0];
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-            expect(addedCustomer.message).toEqual(message);
+            expect(addedCustomer.response).toEqual(response);
         });
     });
 
@@ -118,23 +126,29 @@ describe('customer ctrl', () => {
         const params = {
             customerId: '9f933f19-d3c6-4fa1-a161-0a2a052fdc66'
         };
-        const req = mockRequest(params, null);
+        const user = {
+            id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc66'
+        };
+        const errorMessage = `Could not get customer with id ${params.customerId}: TypeError: Cannot read property 'dataValues' of null`;
+        const req = mockRequest(params, null, user);
         const res = mockResponse();
-        const numberOfDeletedCustomers = await CustomerCtrl.apiDeleteCustomer(req, res);
-        const customer = await CustomerDAO.getCustomerById(params.customerId);
+        await CustomerCtrl.apiDeleteCustomer(req, res);
+        const numberOfDeletedCustomers = res.json.mock.calls[0][0]['response'];
+        const { error } = await CustomerDAO.getCustomerById(params.customerId);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(numberOfDeletedCustomers).toBe(1);
-        expect(customer).toEqual(null);
+        expect(error).toEqual(errorMessage);
     });
 
     test('should get token', async () => {
         const body = {
             email: 'dansan@fake.com'
         };
-        const req = mockRequest(null, body);
+        const req = mockRequest(null, body, null);
         const res = mockResponse();
-        const token = await CustomerCtrl.apiGetToken(req, res);
+        await CustomerCtrl.apiGetToken(req, res);
+        const token = res.json.mock.calls[0][0]['token'];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(typeof token).toEqual('string');
@@ -154,7 +168,7 @@ describe('customer ctrl', () => {
 
     test('should get a customer by email', async () => {
         const email = 'dansan@fake.com';
-        const customer = await CustomerCtrl.apiGetCustomerByEmail(email);
+        const { customer } = await CustomerCtrl.apiGetCustomerByEmail(email);
         expect(customer.id).toEqual('9f933f19-d3c6-4fa1-a161-0a2a052fdc65');
         expect(customer.lastName).toEqual('Santiago');
         expect(customer.email).toEqual('dansan@fake.com');
