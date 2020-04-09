@@ -105,12 +105,23 @@ export default class BookController {
     }
 
     static async apiDeleteBook(req, res) {
+        let response;
+        const bookId = req.params.bookId;
+        const customerId = req.user.id;
         try {
-            const id = req.params.bookId;
-            const deletedBook = await BookDAO.deleteBook(id);
-            res.status(200);
+            const { books } = await BookDAO.getBookById(bookId);
+            const { bookstoreId } = { ...books.dataValues } ;
+            const isOwner = await currentCustomerIsOwnerOfBookstore(customerId, bookstoreId);
+            if (isOwner) {
+                const numberOfDeletedBooks = await BookDAO.deleteBook(bookId);
+                res.status(200);
+                response = `${numberOfDeletedBooks} books deleted`;
+            } else {
+                res.status(400);
+                response = `Not authorized to delete this book`;
+            }
             res.setHeader('Content-Type', 'application/json');
-            res.json(deletedBook);
+            res.json({ response });
         } catch(e) {
             const error = `Error deleting book: ${e}`;
             res.status(500);
