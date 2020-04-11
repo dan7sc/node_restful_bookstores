@@ -6,7 +6,7 @@ export default class BookstoreController {
             const bookstores = await BookstoreDAO.getBookstores();
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            res.json(bookstores);
+            res.json({ bookstores });
         } catch(e) {
             const error = `Error getting bookstores: ${e}`;
             res.status(500);
@@ -45,7 +45,7 @@ export default class BookstoreController {
             const bookstore = await BookstoreDAO.getBookstoreById(id);
             res.status(200);
             res.setHeader('Content-Type', 'application/json');
-            res.json(bookstore);
+            res.json({ bookstore });
         }
         catch (e) {
             const error = `Error getting bookstore by id: ${e}`;
