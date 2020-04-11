@@ -83,8 +83,8 @@ export default class BookController {
         const bookId = req.params.bookId;
         const customerId = req.user.id;
         try {
-            const { books } = await BookDAO.getBookById(bookId);
-            const { bookstoreId } = { ...books.dataValues } ;
+            const book = await BookDAO.getBookById(bookId);
+            const { bookstoreId } = { ...book } ;
             const isOwner = await currentCustomerIsOwnerOfBookstore(customerId, bookstoreId);
             if (isOwner) {
                 const numberOfUpdatedBooks = await BookDAO.updateBook(bookId, data);
@@ -109,8 +109,8 @@ export default class BookController {
         const bookId = req.params.bookId;
         const customerId = req.user.id;
         try {
-            const { books } = await BookDAO.getBookById(bookId);
-            const { bookstoreId } = { ...books.dataValues } ;
+            const book = await BookDAO.getBookById(bookId);
+            const { bookstoreId } = { ...book } ;
             const isOwner = await currentCustomerIsOwnerOfBookstore(customerId, bookstoreId);
             if (isOwner) {
                 const numberOfDeletedBooks = await BookDAO.deleteBook(bookId);
