@@ -47,8 +47,8 @@ export default class BookstoreDAO {
     static async updateBookstore(id, data) {
         try {
             const options = { id: id };
-            const updatedBookstore = await Bookstore.update(data, { where: options });
-            return updatedBookstore;
+            const numberOfUpdatedBookstores = await Bookstore.update(data, { where: options });
+            return numberOfUpdatedBookstores;
         } catch(e) {
             const error = `Could not update bookstore: ${e}`;
             return { error };
@@ -58,8 +58,8 @@ export default class BookstoreDAO {
     static async deleteBookstore(id) {
         try {
             const options = { id: id };
-            const deletedBookstore = await Bookstore.destroy({ where: options });
-            return deletedBookstore;
+            const numberOfDeletedBookstores = await Bookstore.destroy({ where: options });
+            return numberOfDeletedBookstores;
         } catch(e) {
             const error = `Could not delete bookstore: ${e}`;
             return { error };
