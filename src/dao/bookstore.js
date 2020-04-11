@@ -13,7 +13,7 @@ export default class BookstoreDAO {
     static async getBookstores() {
         try {
             const bookstores = await Bookstore.findAll({});
-            return { bookstores };
+            return bookstores;
         }
         catch(e) {
             const error = `Could not get bookstores: ${e}`;
