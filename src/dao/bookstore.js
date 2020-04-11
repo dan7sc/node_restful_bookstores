@@ -37,7 +37,7 @@ export default class BookstoreDAO {
         try {
             const options = { id: id };
             const bookstore = await Bookstore.findOne({ where: options });
-            return bookstore;
+            return bookstore.dataValues;
         } catch(e) {
             const error = `Could not get bookstore with id ${id}: ${e}`;
             return { error };
