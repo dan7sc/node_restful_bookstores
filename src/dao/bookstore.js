@@ -26,7 +26,7 @@ export default class BookstoreDAO {
             const { name } = { ...data };
             const query = { name };
             const [newBookstore, isCreated] = await Bookstore.findOrCreate({ where: query, defaults: data });
-            return [newBookstore, isCreated];
+            return [newBookstore.dataValues, isCreated];
         } catch(e) {
             const error = `Could not add bookstore: ${e}`;
             return { error };
