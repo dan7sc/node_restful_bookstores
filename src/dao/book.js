@@ -12,7 +12,7 @@ export default class BookDAO {
     static async getBooks() {
         try {
             const books = await Book.findAll({});
-            return { books };
+            return books;
         } catch(e) {
             const error = `Could not get books: ${e}`;
             return { error };
@@ -23,7 +23,7 @@ export default class BookDAO {
         try {
             const options = { bookstoreId: id };
             const books = await Book.findAll({ where: options });
-            return { books };
+            return books;
         } catch(e) {
             const error = `Could not get books from bookstore: ${e}`;
             return { error };
@@ -45,8 +45,8 @@ export default class BookDAO {
     static async getBookById(id) {
         try {
             const options = { id: id };
-            const books = await Book.findOne({ where: options });
-            return { books };
+            const book = await Book.findOne({ where: options });
+            return book.dataValues;
         } catch(e) {
             const error = `Could not get books: ${e}`;
             return { error };
