@@ -2,17 +2,18 @@ import BookstoreDAO from '../src/dao/bookstore';
 import BookstoreCtrl from '../src/controllers/bookstore';
 
 jest.mock('express');
-const mockRequest = (params, body) => {
+const mockRequest = (params, body, user) => {
     const req = {};
     req.params = params;
     req.body = body;
+    req.user = user;
     return req;
 };
 const mockResponse = () => {
     const res = {};
     res.status = jest.fn().mockReturnValue(res);
     res.setHeader = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue();
+    res.json = jest.fn().mockReturnValue(res);
     return res;
 };
 
@@ -23,7 +24,8 @@ describe('bookstore ctrl', () => {
 
     test('should get bookstore from api', async () => {
         const res = mockResponse();
-        const bookstores = await BookstoreCtrl.apiGetBookstores({}, res);
+        await BookstoreCtrl.apiGetBookstores({}, res);
+        const bookstores = res.json.mock.calls[0][0]['bookstores'];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(bookstores[0].id).toEqual('6bd895ce-af7a-451a-8b25-50c2876e162a');
@@ -36,8 +38,9 @@ describe('bookstore ctrl', () => {
             bookstoreId: '6bd895ce-af7a-451a-8b25-50c2876e162a'
         };
         const res = mockResponse();
-        const req = mockRequest(params, null);
-        const bookstore = await BookstoreCtrl.apiGetBookstoreById(req, res);
+        const req = mockRequest(params, null, null);
+        await BookstoreCtrl.apiGetBookstoreById(req, res);
+        const bookstore = res.json.mock.calls[0][0]['bookstore'];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
         expect(bookstore.id).toEqual(params.bookstoreId);
@@ -48,19 +51,19 @@ describe('bookstore ctrl', () => {
     test('should add bookstore', async () => {
         const body = {
             id: '6bd895ce-af7a-451a-8b25-50c2876e162f',
-            name: 'Boosktore for Test',
-            picture: 'test_picture.png',
-            customerId: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65',
+            name: 'Bookstore for Test',
+            picture: 'test_picture.png'
         };
-        const req = mockRequest(null, body);
+        const user = {
+            id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
+        };
+        const req = mockRequest(null, body, user);
         const res = mockResponse();
-        const addedBookstore = await BookstoreCtrl.apiAddBookstore(req, res);
+        await BookstoreCtrl.apiAddBookstore(req, res);
+        const addedBookstore = res.json.mock.calls[0][0];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(addedBookstore.id).toEqual(body.id);
-        expect(addedBookstore.name).toEqual(body.name);
-        expect(addedBookstore.picture).toEqual(body.picture);
-        expect(addedBookstore.customerId).toEqual(body.customerId);
+        expect(addedBookstore.response).toEqual(`New bookstore ${body.name} is created`);
     });
 
     test('should update a bookstore', async () => {
@@ -71,29 +74,31 @@ describe('bookstore ctrl', () => {
             name: 'New Name',
             picture: 'new_picture.png'
         };
-        const req = mockRequest(params, body);
+        const user = {
+            id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
+        };
+        const req = mockRequest(params, body, user);
         const res = mockResponse();
-        const numberOfUpdatedBookstores = await BookstoreCtrl.apiUpdateBookstore(req, res);
-        const updatedBookstore = await BookstoreDAO.getBookstoreById(params.bookstoreId);
+        await BookstoreCtrl.apiUpdateBookstore(req, res);
+        const numberOfUpdatedBookstores = res.json.mock.calls[0][0];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(numberOfUpdatedBookstores.pop()).toBe(1);
-        expect(updatedBookstore.id).toEqual(params.bookstoreId);
-        expect(updatedBookstore.name).toEqual(body.name);
-        expect(updatedBookstore.picture).toEqual(body.picture);
+        expect(numberOfUpdatedBookstores).toBe(`1 bookstores updated: ${'Bookstore for Test'} updated`);
     });
 
     test('should delete bookstore', async () => {
         const params = {
             bookstoreId: '6bd895ce-af7a-451a-8b25-50c2876e162f'
         };
-        const req = mockRequest(params, null);
+        const user = {
+            id: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
+        };
+        const req = mockRequest(params, null, user);
         const res = mockResponse();
-        const numberOfDeletedBookstores = await BookstoreCtrl.apiDeleteBookstore(req, res);
-        const bookstore = await BookstoreDAO.getBookstoreById(params.bookstoreId);
+        await BookstoreCtrl.apiDeleteBookstore(req, res);
+        const numberOfDeletedBookstores = res.json.mock.calls[0][0];
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.setHeader).toHaveBeenCalledWith("Content-Type", "application/json");
-        expect(numberOfDeletedBookstores).toBe(1);
-        expect(bookstore).toEqual(null);
+        expect(numberOfDeletedBookstores).toBe(`1 bookstores deleted: ${'New Name'} deleted`);
     });
 });
