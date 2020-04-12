@@ -8,10 +8,11 @@ describe('bookstore dao', () => {
     test('should get bookstores', async () => {
         const bookstores = await BookstoreDAO.getBookstores();
         const firstBookstore = bookstores[0];
-        const lastBookstore  = bookstores[bookstores.length-1];
+        const secondBookstore = bookstores[1];
+        const fiftyBookstore  = bookstores[4];
         expect(firstBookstore.name).toEqual('Urban Fantasy');
-        expect(lastBookstore.name).toEqual('Updated!');
-        expect(bookstores.length).toBe(5);
+        expect(secondBookstore.name).toEqual('Dead Fish');
+        expect(fiftyBookstore.name).toEqual('Updated!');
     });
 
     test('should get a bookstore', async () => {
@@ -20,11 +21,11 @@ describe('bookstore dao', () => {
             "6bd895ce-af7a-451a-8b25-50c2876e162e"
         ];
         const firstBookstore = await BookstoreDAO.getBookstoreById(bookstoreId[0]);
-        const lastBookstore = await BookstoreDAO.getBookstoreById(bookstoreId[1]);
+        const fiftyBookstore = await BookstoreDAO.getBookstoreById(bookstoreId[1]);
         expect(firstBookstore.name).toEqual('Urban Fantasy');
-        expect(lastBookstore.name).toEqual('Updated!');
+        expect(fiftyBookstore.name).toEqual('Updated!');
         expect(firstBookstore.length).toBe(undefined);
-        expect(lastBookstore.length).toBe(undefined);
+        expect(fiftyBookstore.length).toBe(undefined);
     });
 
     test('should add a bookstore', async () => {
@@ -34,9 +35,10 @@ describe('bookstore dao', () => {
             picture: 'my_bookstore_image.png',
             customerId: '9f933f19-d3c6-4fa1-a161-0a2a052fdc65'
         };
-        const addedBookstore = await BookstoreDAO.addBookstore(bookstoreToAdd);
+        const [addedBookstore, isCreated] = await BookstoreDAO.addBookstore(bookstoreToAdd);
         expect(addedBookstore.name).toEqual(bookstoreToAdd.name);
         expect(addedBookstore.picture).toEqual(bookstoreToAdd.picture);
+        expect(isCreated).toBeTruthy();
     });
 
     test('should update bookstore', async () => {
@@ -58,6 +60,6 @@ describe('bookstore dao', () => {
         const numberOfDeletedBookstores = await BookstoreDAO.deleteBookstore(bookstoreId);
         const bookstore = await BookstoreDAO.getBookstoreById(bookstoreId);
         expect(numberOfDeletedBookstores).toBe(1);
-        expect(bookstore).toEqual(null);
+        expect(bookstore.error).not.toEqual(null);
     });
 });
