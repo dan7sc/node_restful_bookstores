@@ -119,6 +119,30 @@ export default class CustomerController {
             res.json({ error });
         }
     }
+
+    static async apiDeleteToken(req, res) {
+        const payload = { email: req.user.email};
+        const secretKey = process.env.TOKEN_SECRET_KEY;
+        const options = { expiresIn: 0 };
+        let response;
+        try {
+            if (req.user) {
+                res.status(200);
+                const token = jwt.sign(payload, secretKey, options);
+                response = token;
+            } else {
+                res.status(400);
+                response = 'Customer not logged';
+            }
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ response });
+        } catch(e) {
+            const error = `Error deleting token: ${e}`;
+            res.status(500);
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ error });
+        }
+    }
 }
 
 const hashPassword = async (password) => {
